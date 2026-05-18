@@ -82,9 +82,46 @@ const deleteProduct = async (req, res) => {
     })
   }
 }
+const updateStock = async (req, res) => {
+  try {
+    const { quantity } = req.body
+
+    const product = await Product.findById(req.params.id)
+
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: 'Product not found'
+      })
+    }
+
+    product.stock += quantity
+
+    if (product.stock < 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'Stock cannot be negative'
+      })
+    }
+
+    await product.save()
+
+    res.status(200).json({
+      success: true,
+      message: 'Stock updated successfully',
+      data: product
+    })
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    })
+  }
+}
 module.exports = {
   createProduct,
   getProducts,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  updateStock
 }

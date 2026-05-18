@@ -6,11 +6,13 @@ const {
   createProduct,
   getProducts,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  updateStock
 } = require('../controllers/product.controller')
 
 router.post('/', createProduct)
 router.get('/', getProducts)
 router.put('/:id', updateProduct)
 router.delete('/:id', deleteProduct)
+router.patch('/:id/stock', updateStock)
 module.exports = router
