@@ -17,7 +17,25 @@ const createProduct = async (req, res) => {
 }
 const getProducts = async (req, res) => {
   try {
-    const products = await Product.find()
+    const { search, category } = req.query
+
+let query = {}
+
+if (search) {
+  query.name = {
+    $regex: search,
+    $options: 'i'
+  }
+}
+
+if (category) {
+  query.category ={
+    $regex: category,
+    $options: 'i'
+  }
+}
+
+const products = await Product.find(query)
 
     res.status(200).json({
       success: true,
