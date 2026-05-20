@@ -36,11 +36,18 @@ if (category) {
 }
 
 const products = await Product.find(query)
+const updatedProducts = products.map(product => {
+  const productObj = product.toObject()
+
+  productObj.lowStock = product.stock < 5
+  productObj.warning=product.stock<5?'Low stock alert':'stock available'
+  return productObj
+})
 
     res.status(200).json({
       success: true,
-      count: products.length,
-      data: products
+      count: updatedProducts.length,
+      data: updatedProducts
     })
   } catch (error) {
     res.status(500).json({
