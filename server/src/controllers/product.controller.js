@@ -8,11 +8,14 @@ const createProduct = async (req, res) => {
       success: true,
       data: product
     })
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message
-    })
+  } catch (error){
+    if(error.code===11000){
+      return res.status(400).json({
+       success:false,
+       message: 'SKU already exists'})}
+     res.status(500).json({
+       succes:false,
+       message: error.message})
   }
 }
 const getProducts = async (req, res) => {

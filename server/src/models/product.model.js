@@ -4,28 +4,33 @@ const productSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true
+      required:[ true, 'Product name is required'],
+      trim:true
     },
 
     sku: {
       type: String,
-      required: true,
-      unique: true
+      required:[ true, 'SKU is required'],
+      unique: true,
+      trim:true
     },
 
     category: {
       type: String,
-      required: true
+      required:[ true, 'Category is required'],
+      trim:true
     },
 
     price: {
       type: Number,
-      required: true
+      required:[ true, 'Price is required'],
+      min:[1, 'Price must be greater than zero']
     },
 
     stock: {
       type: Number,
-      default: 0
+      default: 0,
+      min:[0, 'Stock connot be negative']
     }
   },
   {
