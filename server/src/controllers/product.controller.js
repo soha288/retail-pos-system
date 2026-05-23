@@ -1,11 +1,12 @@
 const Product = require('../models/product.model')
-
+//create new product
 const createProduct = async (req, res) => {
   try {
     const product = await Product.create(req.body)
 
     res.status(201).json({
       success: true,
+      message: 'Product created successfully',
       data: product
     })
   } catch (error){
@@ -18,6 +19,7 @@ const createProduct = async (req, res) => {
        message: error.message})
   }
 }
+//Fetch all products with search and filter
 const getProducts = async (req, res) => {
   try {
     const { search, category } = req.query
@@ -49,6 +51,7 @@ const updatedProducts = products.map(product => {
 
     res.status(200).json({
       success: true,
+      message: 'Products fetched successfully',
       count: updatedProducts.length,
       data: updatedProducts
     })
@@ -59,6 +62,7 @@ const updatedProducts = products.map(product => {
     })
   }
 }
+//Update product details
 const updateProduct = async (req, res) => {
   try {
     const product = await Product.findByIdAndUpdate(
@@ -79,6 +83,7 @@ const updateProduct = async (req, res) => {
 
     res.status(200).json({
       success: true,
+      message: 'Product updated succesfully',
       data: product
     })
   } catch (error) {
@@ -88,6 +93,7 @@ const updateProduct = async (req, res) => {
     })
   }
 }
+//Delete product
 const deleteProduct = async (req, res) => {
   try {
     const product = await Product.findByIdAndDelete(req.params.id)
@@ -110,6 +116,7 @@ const deleteProduct = async (req, res) => {
     })
   }
 }
+//Update inventory stock quantity
 const updateStock = async (req, res) => {
   try {
     const { quantity } = req.body
