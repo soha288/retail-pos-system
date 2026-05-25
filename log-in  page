@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omnichannel POS & Inventory System</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --success: #10b981;
+            --danger: #ef4444;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--light); color: var(--dark); padding: 20px; }
+        
+        .hidden { display: none !important; }
+        
+        /* Auth Screen Styling */
+        #auth-screen {
+            max-width: 400px;
+            margin: 100px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+
+        /* Main Dashboard Styling */
+        #dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 30px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        h2 { margin-bottom: 15px; font-size: 1.25rem; color: var(--primary); }
+        
+        /* Forms & Inputs */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9rem; }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 1 align-items;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover { background: #1d4ed8; }
+        .btn-danger { background: var(--danger); }
+        .btn-danger:hover { background: #dc2626; }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th { background-color: #f1f5f9; }
+
+        /* Receipt Box */
+        #receipt {
+            background: #fef08a;
+            padding: 15px;
+            border-left: 4px solid #eab308;
+            margin-top: 15px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="auth-screen">
+        <h2 style="text-align: center; margin-bottom: 20px;">Customer Sign-In</h2>
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" id="username" value="ahtesham">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="password" value="khan121">
+        </div>
+        <button onclick="handleSignIn()">Sign In</button>
+        <p style="font-size: 0.8rem; text-align: center; margin-top: 15px; color: #64748b;">Hint: ahtesham / khan121</p>
+    </div>
+
+    <div id="dashboard" class="hidden">
+        <header>
+            <div>
+                <h1>Omnichannel Retail Hub</h1>
+                <p>Welcome, <span id="user-display" style="font-weight: bold; color: var(--primary);"></span></p>
+            </div>
+            <button style="width: auto; padding: 8px 15px;" class="btn-danger" onclick="handleSignOut()">Sign Out</button>
+        </header>
+
+        <div class="grid">
+            <div class="col">
+                <div class="card">
+                    <h2>🛒 POS Transaction</h2>
+                    <div class="form-group">
+                        <label>Select Sales Channel</label>
+                        <select id="pos-channel">
+                            <option value="inStore">Physical Store Register</option>
+                            <option value="online">Web / E-commerce App</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Product</label>
+                        <select id="pos-product" onchange="updateMaxQty()"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantity</label>
+                        <input type="number" id="pos-qty" min="1" value="1">
+                    </div>
+                    <button onclick="processSale()">Process & Sync Order</button>
+                </div>
+
+                <div id="receipt-container" class="hidden">
+                    <div id="receipt"></div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card">
+                    <h2>📦 Live Omnichannel Inventory Status</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>In-Store Stock</th>
+                                <th>Online Stock</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventory-table-body">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Core Mock Data Storage
+        let inventory = [
+            { id: "101", name: "Classic White Tee", inStore: 45, online: 110, price: 25.00 },
+            { id: "102", name: "Running Shoes", inStore: 12, online: 38, price: 89.99 },
+            { id: "103", name: "Leather Wallet", inStore: 28, online: 8, price: 45.00 }
+        ];
+
+        // --- AUTHENTICATION FLOW ---
+        function handleSignIn() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+
+            if(user === 'ahtesham' && pass === 'khan121') {
+                document.getElementById('auth-screen').classList.add('hidden');
+                document.getElementById('dashboard').classList.remove('hidden');
+                document.getElementById('user-display').innerText = user;
+                
+                // Initialize setup view
+                renderInventory();
+                populateProductDropdown();
+            } else {
+                alert("❌ Invalid Credentials. Try ahtesham/khan121");
+            }
+        }
+
+        function handleSignOut() {
+            document.getElementById('dashboard').classList.add('hidden');
+            document.getElementById('auth-screen').classList.remove('hidden');
+            document.getElementById('receipt-container').classList.add('hidden');
+        }
+
+        // --- INVENTORY MANAGEMENT ENGINE ---
+        function renderInventory() {
+            const tbody = document.getElementById('inventory-table-body');
+            tbody.innerHTML = '';
+            
+            inventory.forEach(item => {
+                const row = `<tr>
+                    <strong><td>${item.name}</td></strong>
+                    <td><span style="color: ${item.inStore < 15 ? 'var(--danger)' : 'inherit'}">${item.inStore} units</span></td>
+                    <td><span>${item.online} units</span></td>
+                    <td><strong>$${item.price.toFixed(2)}</strong></td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+        }
+
+        function populateProductDropdown() {
+            const select = document.getElementById('pos-product');
+            select.innerHTML = '';
+            inventory.forEach(item => {
+                select.innerHTML += `<option value="${item.id}">${item.name}</option>`;
+            });
+        }
+
+        // --- POS CORE LOGIC ---
+        function processSale() {
+            const channel = document.getElementById('pos-channel').value; // 'inStore' or 'online'
+            const productId = document.getElementById('pos-product').value;
+            const qty = parseInt(document.getElementById('pos-qty').value);
+
+            const product = inventory.find(item => item.id === productId);
+            const stockKey = channel === 'inStore' ? 'inStore' : 'online';
+            const channelLabel = channel === 'inStore' ? 'Physical Store' : 'E-Commerce Website';
+
+            if (qty <= 0 || isNaN(qty)) {
+                alert("❌ Please enter a valid layout quantity.");
+                return;
+            }
+
+            if (product[stockKey] < qty) {
+                alert(`❌ Shortage! Not enough items ready in the ${channelLabel} warehouse.`);
+                return;
+            }
+
+            // Deduct from real-time instance database
+            product[stockKey] -= qty;
+            
+            // Re-render UI views immediately
+            renderInventory();
+
+            // Print simulated live transaction text receipt
+            const total = qty * product.price;
+            const receiptBox = document.getElementById('receipt');
+            receiptBox.innerHTML = `
+                <h4>🧾 Order Processed Successfully!</h4>
+                <p style="margin-top:5px;"><strong>Channel:</strong> ${channelLabel}</p>
+                <p><strong>Item:</strong> ${product.name} x ${qty}</p>
+                <p style="font-size: 1.1rem; margin-top:5px;"><strong>Total Charged:</strong> $${total.toFixed(2)}</p>
+            `;
+            document.getElementById('receipt-container').classList.remove('hidden');
+        }
+    </script>
