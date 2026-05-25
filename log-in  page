@@ -1,276 +1,455 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Omnichannel POS & Inventory System</title>
-    <style>
-        :root {
-            --primary: #2563eb;
-            --success: #10b981;
-            --danger: #ef4444;
-            --dark: #1e293b;
-            --light: #f8fafc;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>OmniPOS - Sign In / Sign Up</title>
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: var(--light); color: var(--dark); padding: 20px; }
-        
-        .hidden { display: none !important; }
-        
-        /* Auth Screen Styling */
-        #auth-screen {
-            max-width: 400px;
-            margin: 100px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-        }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-        /* Main Dashboard Styling */
-        #dashboard {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #e2e8f0;
-            margin-bottom: 30px;
-        }
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
 
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 30px;
-        }
+body{
+    min-height:100vh;
+    background: linear-gradient(135deg,#0f172a,#1e293b,#111827);
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
 
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-        }
+/* Animated background */
+body::before{
+    content:'';
+    position:absolute;
+    width:500px;
+    height:500px;
+    background:#2563eb;
+    filter:blur(180px);
+    top:-150px;
+    left:-100px;
+    opacity:.3;
+    animation: float1 8s infinite ease-in-out;
+}
 
-        h2 { margin-bottom: 15px; font-size: 1.25rem; color: var(--primary); }
-        
-        /* Forms & Inputs */
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9rem; }
-        input, select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            font-size: 1 align-items;
-        }
+body::after{
+    content:'';
+    position:absolute;
+    width:450px;
+    height:450px;
+    background:#7c3aed;
+    filter:blur(180px);
+    bottom:-120px;
+    right:-100px;
+    opacity:.25;
+    animation: float2 8s infinite ease-in-out;
+}
 
-        button {
-            width: 100%;
-            padding: 10px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        button:hover { background: #1d4ed8; }
-        .btn-danger { background: var(--danger); }
-        .btn-danger:hover { background: #dc2626; }
+@keyframes float1{
+    50%{
+        transform:translateY(40px);
+    }
+}
+@keyframes float2{
+    50%{
+        transform:translateY(-40px);
+    }
+}
 
-        /* Tables */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        th { background-color: #f1f5f9; }
+.container{
+    position:relative;
+    width:950px;
+    max-width:95%;
+    height:600px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    border-radius:30px;
+    overflow:hidden;
+    display:flex;
+    box-shadow:0 30px 80px rgba(0,0,0,.5);
+}
 
-        /* Receipt Box */
-        #receipt {
-            background: #fef08a;
-            padding: 15px;
-            border-left: 4px solid #eab308;
-            margin-top: 15px;
-            border-radius: 4px;
-        }
-    </style>
+/* Left Panel */
+.left{
+    width:50%;
+    padding:50px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    position:relative;
+}
+
+.logo{
+    font-size:36px;
+    font-weight:700;
+    margin-bottom:10px;
+}
+
+.tag{
+    text-align:center;
+    opacity:.8;
+    margin-bottom:30px;
+}
+
+/* Parcel Character */
+.character{
+    position:relative;
+    width:220px;
+    height:220px;
+    margin-bottom:20px;
+}
+
+.parcel{
+    position:absolute;
+    width:180px;
+    height:160px;
+    background:#d97706;
+    border-radius:20px;
+    top:40px;
+    left:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.35);
+}
+
+.tape{
+    position:absolute;
+    width:40px;
+    height:160px;
+    background:#fde68a;
+    left:70px;
+}
+
+.eye{
+    width:35px;
+    height:35px;
+    background:white;
+    border-radius:50%;
+    position:absolute;
+    top:45px;
+    overflow:hidden;
+}
+
+.eye.left-eye{
+    left:35px;
+}
+
+.eye.right-eye{
+    right:35px;
+}
+
+.pupil{
+    width:14px;
+    height:14px;
+    background:#111827;
+    border-radius:50%;
+    position:absolute;
+    top:10px;
+    left:10px;
+    transition:.08s linear;
+}
+
+.mouth{
+    position:absolute;
+    width:45px;
+    height:8px;
+    background:#111827;
+    border-radius:50px;
+    bottom:40px;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+/* Boss parcel */
+.boss{
+    position:absolute;
+    top:-10px;
+    right:-10px;
+    width:90px;
+    height:90px;
+    background:#f59e0b;
+    border-radius:16px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    transform:rotate(-10deg);
+    transition:.4s;
+}
+
+.boss-eye{
+    width:18px;
+    height:18px;
+    background:white;
+    border-radius:50%;
+    margin:5px;
+    overflow:hidden;
+    position:relative;
+}
+
+.boss-pupil{
+    width:7px;
+    height:7px;
+    background:black;
+    border-radius:50%;
+    position:absolute;
+    top:5px;
+    left:5px;
+    transition:.2s;
+}
+
+/* Right Panel */
+.right{
+    width:50%;
+    background:rgba(255,255,255,0.03);
+    padding:50px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.form-box{
+    width:100%;
+}
+
+.form-box h2{
+    color:white;
+    font-size:34px;
+    margin-bottom:10px;
+}
+
+.form-box p{
+    color:#cbd5e1;
+    margin-bottom:30px;
+}
+
+.input-group{
+    margin-bottom:18px;
+}
+
+.input-group input{
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:14px;
+    outline:none;
+    background:rgba(255,255,255,0.08);
+    color:white;
+    font-size:15px;
+}
+
+.input-group input::placeholder{
+    color:#cbd5e1;
+}
+
+.btn{
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(to right,#2563eb,#7c3aed);
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    font-weight:600;
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+}
+
+.switch{
+    text-align:center;
+    margin-top:20px;
+    color:#cbd5e1;
+}
+
+.switch span{
+    color:#60a5fa;
+    cursor:pointer;
+    font-weight:600;
+}
+
+@media(max-width:850px){
+    .container{
+        flex-direction:column;
+        height:auto;
+    }
+
+    .left,.right{
+        width:100%;
+    }
+}
+</style>
 </head>
 <body>
 
-    <div id="auth-screen">
-        <h2 style="text-align: center; margin-bottom: 20px;">Customer Sign-In</h2>
-        <div class="form-group">
-            <label>Username</label>
-            <input type="text" id="username" value="ahtesham">
-        </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" id="password" value="khan121">
-        </div>
-        <button onclick="handleSignIn()">Sign In</button>
-        <p style="font-size: 0.8rem; text-align: center; margin-top: 15px; color: #64748b;">Hint: ahtesham / khan121</p>
-    </div>
+<div class="container">
 
-    <div id="dashboard" class="hidden">
-        <header>
-            <div>
-                <h1>Omnichannel Retail Hub</h1>
-                <p>Welcome, <span id="user-display" style="font-weight: bold; color: var(--primary);"></span></p>
-            </div>
-            <button style="width: auto; padding: 8px 15px;" class="btn-danger" onclick="handleSignOut()">Sign Out</button>
-        </header>
+    <div class="left">
 
-        <div class="grid">
-            <div class="col">
-                <div class="card">
-                    <h2>🛒 POS Transaction</h2>
-                    <div class="form-group">
-                        <label>Select Sales Channel</label>
-                        <select id="pos-channel">
-                            <option value="inStore">Physical Store Register</option>
-                            <option value="online">Web / E-commerce App</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Product</label>
-                        <select id="pos-product" onchange="updateMaxQty()"></select>
-                    </div>
-                    <div class="form-group">
-                        <label>Quantity</label>
-                        <input type="number" id="pos-qty" min="1" value="1">
-                    </div>
-                    <button onclick="processSale()">Process & Sync Order</button>
+        <div class="logo">OmniPOS</div>
+        <div class="tag">
+            Omnichannel POS & Inventory Management
+        </div>
+
+        <div class="character">
+
+            <div class="boss" id="boss">
+                <div class="boss-eye">
+                    <div class="boss-pupil"></div>
                 </div>
 
-                <div id="receipt-container" class="hidden">
-                    <div id="receipt"></div>
+                <div class="boss-eye">
+                    <div class="boss-pupil"></div>
                 </div>
             </div>
 
-            <div class="col">
-                <div class="card">
-                    <h2>📦 Live Omnichannel Inventory Status</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Product</th>
-                                <th>In-Store Stock</th>
-                                <th>Online Stock</th>
-                                <th>Price</th>
-                            </tr>
-                        </thead>
-                        <tbody id="inventory-table-body">
-                            </tbody>
-                    </table>
+            <div class="parcel">
+
+                <div class="tape"></div>
+
+                <div class="eye left-eye">
+                    <div class="pupil"></div>
                 </div>
+
+                <div class="eye right-eye">
+                    <div class="pupil"></div>
+                </div>
+
+                <div class="mouth"></div>
             </div>
         </div>
     </div>
 
-    <script>
-        // Core Mock Data Storage
-        let inventory = [
-            { id: "101", name: "Classic White Tee", inStore: 45, online: 110, price: 25.00 },
-            { id: "102", name: "Running Shoes", inStore: 12, online: 38, price: 89.99 },
-            { id: "103", name: "Leather Wallet", inStore: 28, online: 8, price: 45.00 }
-        ];
+    <div class="right">
 
-        // --- AUTHENTICATION FLOW ---
-        function handleSignIn() {
-            const user = document.getElementById('username').value;
-            const pass = document.getElementById('password').value;
+        <div class="form-box">
+            <h2 id="title">Sign In</h2>
+            <p>Manage sales, inventory & orders in one place.</p>
 
-            if(user === 'ahtesham' && pass === 'khan121') {
-                document.getElementById('auth-screen').classList.add('hidden');
-                document.getElementById('dashboard').classList.remove('hidden');
-                document.getElementById('user-display').innerText = user;
-                
-                // Initialize setup view
-                renderInventory();
-                populateProductDropdown();
-            } else {
-                alert("❌ Invalid Credentials. Try ahtesham/khan121");
-            }
-        }
+            <div class="input-group">
+                <input type="email" placeholder="Email Address">
+            </div>
 
-        function handleSignOut() {
-            document.getElementById('dashboard').classList.add('hidden');
-            document.getElementById('auth-screen').classList.remove('hidden');
-            document.getElementById('receipt-container').classList.add('hidden');
-        }
+            <div class="input-group" id="nameField" style="display:none;">
+                <input type="text" placeholder="Full Name">
+            </div>
 
-        // --- INVENTORY MANAGEMENT ENGINE ---
-        function renderInventory() {
-            const tbody = document.getElementById('inventory-table-body');
-            tbody.innerHTML = '';
+            <div class="input-group">
+                <input type="password" id="password"
+                placeholder="Password">
+            </div>
+
+            <button class="btn">
+                Continue
+            </button>
+
+            <div class="switch">
+                <span onclick="toggleForm()">
+                    Create account
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const pupils = document.querySelectorAll(".pupil");
+const bossPupils = document.querySelectorAll(".boss-pupil");
+const password = document.getElementById("password");
+const boss = document.getElementById("boss");
+
+document.addEventListener("mousemove", (e)=>{
+
+    const x = (e.clientX / window.innerWidth - .5) * 12;
+    const y = (e.clientY / window.innerHeight - .5) * 12;
+
+    pupils.forEach(p=>{
+        p.style.transform =
+        `translate(${x}px,${y}px)`;
+    });
+
+    bossPupils.forEach(p=>{
+        p.style.transform =
+        `translate(${x}px,${y}px)`;
+    });
+});
+
+// Boss + parcel both look away on password focus
+password.addEventListener("focus", ()=>{
+
+    boss.style.transform =
+    "rotate(-10deg) translateX(50px)";
+
+    // boss eyes
+    bossPupils.forEach(p=>{
+        p.style.transform =
+        "translate(-10px,0px)";
+    });
+
+    // big parcel eyes
+    pupils.forEach(p=>{
+        p.style.transform =
+        "translate(0px,0px)";
+    });
+});
+
+password.addEventListener("blur", ()=>{
+
+    boss.style.transform =
+    "rotate(-10deg)";
+
+    bossPupils.forEach(p=>{
+        p.style.transform =
+        "translate(-10px,0px)";
+    });
+
+    pupils.forEach(p=>{
+        p.style.transform =
+        "translate(0px,0px)";
+    });
+});
+
+// Toggle sign in / sign up
+function toggleForm(){
+
+    const title =
+    document.getElementById("title");
+
+    const field =
+    document.getElementById("nameField");
+
+    const switchBtn =
+    document.querySelector(".switch span");
+
+    if(title.innerText === "Sign In"){
+        title.innerText = "Sign Up";
+        field.style.display = "block";
+        switchBtn.innerText =
+        "Already have an account?";
+    }
+    else{
+        title.innerText = "Sign In";
+        field.style.display = "none";
+        switchBtn.innerText =
+        "Create account";
+    }
+}
+
+</script>
+
+</body>
+</html>
             
-            inventory.forEach(item => {
-                const row = `<tr>
-                    <strong><td>${item.name}</td></strong>
-                    <td><span style="color: ${item.inStore < 15 ? 'var(--danger)' : 'inherit'}">${item.inStore} units</span></td>
-                    <td><span>${item.online} units</span></td>
-                    <td><strong>$${item.price.toFixed(2)}</strong></td>
-                </tr>`;
-                tbody.innerHTML += row;
-            });
-        }
-
-        function populateProductDropdown() {
-            const select = document.getElementById('pos-product');
-            select.innerHTML = '';
-            inventory.forEach(item => {
-                select.innerHTML += `<option value="${item.id}">${item.name}</option>`;
-            });
-        }
-
-        // --- POS CORE LOGIC ---
-        function processSale() {
-            const channel = document.getElementById('pos-channel').value; // 'inStore' or 'online'
-            const productId = document.getElementById('pos-product').value;
-            const qty = parseInt(document.getElementById('pos-qty').value);
-
-            const product = inventory.find(item => item.id === productId);
-            const stockKey = channel === 'inStore' ? 'inStore' : 'online';
-            const channelLabel = channel === 'inStore' ? 'Physical Store' : 'E-Commerce Website';
-
-            if (qty <= 0 || isNaN(qty)) {
-                alert("❌ Please enter a valid layout quantity.");
-                return;
-            }
-
-            if (product[stockKey] < qty) {
-                alert(`❌ Shortage! Not enough items ready in the ${channelLabel} warehouse.`);
-                return;
-            }
-
-            // Deduct from real-time instance database
-            product[stockKey] -= qty;
-            
-            // Re-render UI views immediately
-            renderInventory();
-
-            // Print simulated live transaction text receipt
-            const total = qty * product.price;
-            const receiptBox = document.getElementById('receipt');
-            receiptBox.innerHTML = `
-                <h4>🧾 Order Processed Successfully!</h4>
-                <p style="margin-top:5px;"><strong>Channel:</strong> ${channelLabel}</p>
-                <p><strong>Item:</strong> ${product.name} x ${qty}</p>
-                <p style="font-size: 1.1rem; margin-top:5px;"><strong>Total Charged:</strong> $${total.toFixed(2)}</p>
-            `;
-            document.getElementById('receipt-container').classList.remove('hidden');
-        }
-    </script>
