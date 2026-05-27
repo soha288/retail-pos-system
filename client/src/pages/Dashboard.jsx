@@ -3,6 +3,10 @@ import {
   useState
 } from 'react'
 
+import Navbar from '../components/Navbar'
+
+import Sidebar from '../components/Sidebar'
+
 import ProductForm from '../components/ProductForm'
 
 import ProductTable from '../components/ProductTable'
@@ -36,27 +40,43 @@ export default function Dashboard() {
   }, [search])
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="bg-slate-100 min-h-screen">
 
-      <div className="max-w-6xl mx-auto">
+      <Navbar />
 
-        <h1 className="text-4xl font-bold mb-8 text-center">
-          Retail POS System
-        </h1>
+      <div className="flex">
 
-        <ProductForm
-          refreshProducts={loadProducts}
-        />
+        <Sidebar />
 
-        <SearchBar
-          search={search}
-          setSearch={setSearch}
-        />
+        <div className="flex-1 p-8">
 
-        <ProductTable
-          products={products}
-          refreshProducts={loadProducts}
-        />
+          <div className="mb-8">
+
+            <h1 className="text-4xl font-bold text-slate-800 mb-2">
+              Inventory Dashboard
+            </h1>
+
+            <p className="text-slate-500">
+              Product & Inventory Management Module
+            </p>
+
+          </div>
+
+          <ProductForm
+            refreshProducts={loadProducts}
+          />
+
+          <SearchBar
+            search={search}
+            setSearch={setSearch}
+          />
+
+          <ProductTable
+            products={products}
+            refreshProducts={loadProducts}
+          />
+
+        </div>
 
       </div>
 
