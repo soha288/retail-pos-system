@@ -10,7 +10,7 @@ export default function Navbar() {
         </h1>
 
         <p className="text-slate-500 text-sm">
-          Inventory & Store Management
+          Omnichannel Retail Management Platform
         </p>
 
       </div>
@@ -24,7 +24,7 @@ export default function Navbar() {
           </p>
 
           <p className="text-sm text-slate-500">
-            System Administrator
+            Admin • RBAC Enabled
           </p>
 
         </div>
