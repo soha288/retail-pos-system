@@ -6,22 +6,20 @@ import Login from './pages/Login'
 
 export default function App() {
 
-  const [isLoggedIn, setIsLoggedIn] =
-    useState(false)
+  const [user, setUser] =
+    useState(null)
 
   return (
 
-    isLoggedIn
+    user
 
       ?
 
-      <Dashboard />
+      <Dashboard user={user} />
 
       :
 
-      <Login
-        setIsLoggedIn={setIsLoggedIn}
-      />
+      <Login setUser={setUser} />
 
   )
 }

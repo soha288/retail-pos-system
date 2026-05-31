@@ -20,11 +20,11 @@ export default function Navbar() {
         <div className="text-right">
 
           <p className="font-semibold text-slate-700">
-            Admin User
+            Inventory Manager
           </p>
 
           <p className="text-sm text-slate-500">
-            Admin • RBAC Enabled
+             RBAC Enabled
           </p>
 
         </div>

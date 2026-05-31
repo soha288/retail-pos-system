@@ -17,7 +17,9 @@ import {
   fetchProducts
 } from '../services/api'
 
-export default function Dashboard() {
+export default function Dashboard({
+  user
+}) {
 
   const [products, setProducts] =
     useState([])
@@ -61,7 +63,7 @@ export default function Dashboard() {
             <div>
 
               <h1 className="text-4xl font-bold text-slate-800 mb-2">
-                Dashboard
+                Inventory Management Dashboard
               </h1>
 
               <p className="text-slate-500">
@@ -70,8 +72,8 @@ export default function Dashboard() {
 
             </div>
 
-            <p className="text-slate-500">
-              Admin Dashboard
+            <p className="text-slate-500 font-semibold">
+              {user?.role}
             </p>
 
           </div>

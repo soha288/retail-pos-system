@@ -1,12 +1,19 @@
+import { useState } from 'react'
+
 export default function Login({
-  setIsLoggedIn
+  setUser
 }) {
+
+  const [role, setRole] =
+    useState('Inventory Manager')
 
   const handleLogin = (e) => {
 
     e.preventDefault()
 
-    setIsLoggedIn(true)
+    setUser({
+      role
+    })
   }
 
   return (
@@ -32,35 +39,41 @@ export default function Login({
           className="space-y-5"
         >
 
-          <div>
+          <input
+            type="email"
+            placeholder="Enter Email"
+            className="w-full border border-slate-300 p-4 rounded-xl"
+            required
+          />
 
-            <label className="block text-slate-600 mb-2">
-              Email Address
-            </label>
+          <input
+            type="password"
+            placeholder="Enter Password"
+            className="w-full border border-slate-300 p-4 rounded-xl"
+            required
+          />
 
-            <input
-              type="email"
-              placeholder="admin@gmail.com"
-              className="w-full border border-slate-300 p-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
+          <select
+            value={role}
+            onChange={(e) =>
+              setRole(e.target.value)
+            }
+            className="w-full border border-slate-300 p-4 rounded-xl"
+          >
 
-          </div>
+            <option>
+              Inventory Manager
+            </option>
 
-          <div>
+            <option>
+              System Administrator
+            </option>
 
-            <label className="block text-slate-600 mb-2">
-              Password
-            </label>
+            <option>
+              Store Cashier
+            </option>
 
-            <input
-              type="password"
-              placeholder="••••••••"
-              className="w-full border border-slate-300 p-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-
-          </div>
+          </select>
 
           <button
             type="submit"
@@ -73,7 +86,7 @@ export default function Login({
 
         <p className="text-center text-slate-500 mt-6">
 
-          RBAC Enabled • JWT Authentication
+          JWT Authentication • RBAC Enabled
 
         </p>
 
