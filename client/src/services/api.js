@@ -1,11 +1,15 @@
-const API_URL = 'http://localhost:5000/products'
+const PRODUCT_API =
+  'http://localhost:5000/products'
+
+const ORDER_API =
+  'http://localhost:5000/orders'
 
 export const fetchProducts = async (
   search = ''
 ) => {
 
   const response = await fetch(
-    `${API_URL}?search=${search}`
+    `${PRODUCT_API}?search=${search}`
   )
 
   return response.json()
@@ -16,7 +20,7 @@ export const createProduct = async (
 ) => {
 
   const response = await fetch(
-    API_URL,
+    PRODUCT_API,
     {
       method: 'POST',
 
@@ -24,17 +28,21 @@ export const createProduct = async (
         'Content-Type': 'application/json'
       },
 
-      body: JSON.stringify(productData)
+      body: JSON.stringify(
+        productData
+      )
     }
   )
 
   return response.json()
 }
 
-export const deleteProduct = async (id) => {
+export const deleteProduct = async (
+  id
+) => {
 
   const response = await fetch(
-    `${API_URL}/${id}`,
+    `${PRODUCT_API}/${id}`,
     {
       method: 'DELETE'
     }
@@ -49,7 +57,7 @@ export const updateProduct = async (
 ) => {
 
   const response = await fetch(
-    `${API_URL}/${id}`,
+    `${PRODUCT_API}/${id}`,
     {
       method: 'PUT',
 
@@ -57,19 +65,22 @@ export const updateProduct = async (
         'Content-Type': 'application/json'
       },
 
-      body: JSON.stringify(updatedData)
+      body: JSON.stringify(
+        updatedData
+      )
     }
   )
 
   return response.json()
 }
+
 export const updateStock = async (
   id,
   quantity
 ) => {
 
   const response = await fetch(
-    `${API_URL}/${id}/stock`,
+    `${PRODUCT_API}/${id}/stock`,
     {
       method: 'PATCH',
 
@@ -84,4 +95,45 @@ export const updateStock = async (
   )
 
   return response.json()
+}
+
+export const createOrder = async (
+  orderData
+) => {
+
+  const response = await fetch(
+    ORDER_API,
+    {
+      method: 'POST',
+
+      headers: {
+        'Content-Type': 'application/json'
+      },
+
+      body: JSON.stringify(
+        orderData
+      )
+    }
+  )
+
+  return response.json()
+}
+
+export const fetchOrders = async () => {
+
+  const response = await fetch(
+    ORDER_API
+  )
+
+  return response.json()
+}
+export const fetchDashboardStats =
+  async () => {
+
+    const response =
+      await fetch(
+        'http://localhost:5000/dashboard'
+      )
+
+    return response.json()
 }

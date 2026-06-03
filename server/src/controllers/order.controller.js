@@ -1,5 +1,7 @@
 const Order = require('../models/order.model')
 
+const Product = require('../models/product.model')
+
 const createOrder = async (
   req,
   res
@@ -7,12 +9,54 @@ const createOrder = async (
 
   try {
 
+    const {
+      products,
+      totalAmount
+    } = req.body
+
+    for (const item of products) {
+
+      const product =
+        await Product.findById(
+          item.product
+        )
+
+      if (!product) {
+
+        return res.status(404).json({
+          success: false,
+          message: 'Product not found'
+        })
+      }
+
+      if (
+        product.stock <
+        item.quantity
+      ) {
+
+        return res.status(400).json({
+          success: false,
+          message:
+            `${product.name} has insufficient stock`
+        })
+      }
+
+      product.stock -=
+        item.quantity
+
+      await product.save()
+    }
+
     const order =
-      await Order.create(req.body)
+      await Order.create({
+        products,
+        totalAmount
+      })
 
     res.status(201).json({
       success: true,
-      message: 'Order created successfully',
+      message:
+        'Order placed successfully',
       order
     })
 
@@ -34,8 +78,12 @@ const getOrders = async (
 
     const orders =
       await Order.find()
-        .populate('cashier')
-        .populate('products.product')
+        .populate(
+          'products.product'
+        )
+        .sort({
+          createdAt: -1
+        })
 
     res.status(200).json({
       success: true,

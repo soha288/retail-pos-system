@@ -21,101 +21,205 @@ export default function ProductForm({
 
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]:
+        e.target.value
     })
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit =
+    async (e) => {
 
-    e.preventDefault()
+      e.preventDefault()
 
-    const data = await createProduct({
-      ...formData,
-      price: Number(formData.price),
-      stock: Number(formData.stock)
-    })
+      const data =
+        await createProduct({
+          ...formData,
+          price: Number(
+            formData.price
+          ),
+          stock: Number(
+            formData.stock
+          )
+        })
 
-    alert(data.message)
+      alert(data.message)
 
-    refreshProducts()
+      refreshProducts()
 
-    setFormData({
-      name: '',
-      sku: '',
-      category: '',
-      price: '',
-      stock: ''
-    })
-  }
+      setFormData({
+        name: '',
+        sku: '',
+        category: '',
+        price: '',
+        stock: ''
+      })
+    }
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-md mb-8">
 
-      <h2 className="text-2xl font-semibold mb-4">
-        Add Product
-      </h2>
+    <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-8 mb-8">
+
+      <div className="flex items-center justify-between mb-8">
+
+        <div>
+
+          <h2 className="text-3xl font-bold text-slate-800">
+            Add New Product
+          </h2>
+
+          <p className="text-slate-500 mt-1">
+            Create and manage inventory products
+          </p>
+
+        </div>
+
+        <div className="bg-blue-100 text-blue-700 px-4 py-2 rounded-xl font-semibold">
+          Inventory Module
+        </div>
+
+      </div>
 
       <form
         onSubmit={handleSubmit}
-        className="grid md:grid-cols-2 gap-4"
+        className="grid grid-cols-1 md:grid-cols-2 gap-6"
       >
 
-        <input
-          type="text"
-          name="name"
-          placeholder="Product Name"
-          value={formData.name}
-          onChange={handleChange}
-          className="border p-3 rounded-lg"
-          required
-        />
+        <div>
 
-        <input
-          type="text"
-          name="sku"
-          placeholder="SKU"
-          value={formData.sku}
-          onChange={handleChange}
-          className="border p-3 rounded-lg"
-          required
-        />
+          <label className="block text-sm font-semibold text-slate-600 mb-2">
 
-        <input
-          type="text"
-          name="category"
-          placeholder="Category"
-          value={formData.category}
-          onChange={handleChange}
-          className="border p-3 rounded-lg"
-          required
-        />
+            Product Name
 
-        <input
-          type="number"
-          name="price"
-          placeholder="Price"
-          value={formData.price}
-          onChange={handleChange}
-          className="border p-3 rounded-lg"
-          required
-        />
+          </label>
 
-        <input
-          type="number"
-          name="stock"
-          placeholder="Stock"
-          value={formData.stock}
-          onChange={handleChange}
-          className="border p-3 rounded-lg"
-          required
-        />
+          <input
+            type="text"
+            name="name"
+            placeholder="Enter product name"
+            value={formData.name}
+            onChange={handleChange}
+            className="w-full border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none p-4 rounded-xl"
+            required
+          />
 
-        <button
-          type="submit"
-          className="bg-black text-white p-3 rounded-lg"
-        >
-          Create Product
-        </button>
+        </div>
+
+        <div>
+
+          <label className="block text-sm font-semibold text-slate-600 mb-2">
+
+            SKU
+
+          </label>
+
+          <input
+            type="text"
+            name="sku"
+            placeholder="Enter SKU"
+            value={formData.sku}
+            onChange={handleChange}
+            className="w-full border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none p-4 rounded-xl"
+            required
+          />
+
+        </div>
+
+        <div>
+
+          <label className="block text-sm font-semibold text-slate-600 mb-2">
+
+            Category
+
+          </label>
+
+          <select
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            className="w-full border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none p-4 rounded-xl"
+            required
+          >
+
+            <option value="">
+              Select Category
+            </option>
+
+            <option>
+              Electronics
+            </option>
+
+            <option>
+              Grocery
+            </option>
+
+            <option>
+              Fashion
+            </option>
+
+            <option>
+              Furniture
+            </option>
+
+            <option>
+              Accessories
+            </option>
+
+          </select>
+
+        </div>
+
+        <div>
+
+          <label className="block text-sm font-semibold text-slate-600 mb-2">
+
+            Product Price
+
+          </label>
+
+          <input
+            type="number"
+            name="price"
+            placeholder="Enter price"
+            value={formData.price}
+            onChange={handleChange}
+            className="w-full border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none p-4 rounded-xl"
+            required
+          />
+
+        </div>
+
+        <div>
+
+          <label className="block text-sm font-semibold text-slate-600 mb-2">
+
+            Stock Quantity
+
+          </label>
+
+          <input
+            type="number"
+            name="stock"
+            placeholder="Enter stock quantity"
+            value={formData.stock}
+            onChange={handleChange}
+            className="w-full border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none p-4 rounded-xl"
+            required
+          />
+
+        </div>
+
+        <div className="flex items-end">
+
+          <button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 transition text-white font-semibold p-4 rounded-xl shadow-md"
+          >
+
+            Create Product
+
+          </button>
+
+        </div>
 
       </form>
 
