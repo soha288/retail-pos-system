@@ -1,6 +1,10 @@
 import { useState } from 'react'
 
-import Dashboard from './pages/Dashboard'
+import InventoryDashboard from './pages/InventoryDashboard'
+
+import AdminDashboard from './pages/AdminDashboard'
+
+import CashierDashboard from './pages/CashierDashboard'
 
 import Login from './pages/Login'
 
@@ -35,34 +39,89 @@ export default function App() {
 
       {
 
-        activePage === 'dashboard'
+        user.role ===
+          'Inventory Manager'
 
           &&
 
-          <Dashboard
+          activePage ===
+            'dashboard'
+
+          &&
+
+          <InventoryDashboard
             user={user}
-            setActivePage={setActivePage}
+            setActivePage={
+              setActivePage
+            }
           />
 
       }
 
       {
 
-        activePage === 'orders'
+        user.role ===
+          'System Administrator'
 
           &&
 
-          <Orders
-  setActivePage={
-    setActivePage
-  }
-/>
+          activePage ===
+            'dashboard'
+
+          &&
+
+          <AdminDashboard
+            setActivePage={
+              setActivePage
+            }
+          />
 
       }
 
       {
 
-        activePage === 'users'
+        user.role ===
+          'Store Cashier'
+
+          &&
+
+          activePage ===
+            'dashboard'
+
+          &&
+
+          <CashierDashboard
+            setActivePage={
+              setActivePage
+            }
+          />
+
+      }
+
+      {
+
+        activePage ===
+          'orders'
+
+          &&
+
+          <Orders
+            setActivePage={
+              setActivePage
+            }
+          />
+
+      }
+
+      {
+
+        activePage ===
+          'users'
+
+          &&
+
+          user.role ===
+            'System Administrator'
 
           &&
 

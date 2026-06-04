@@ -137,3 +137,13 @@ export const fetchDashboardStats =
 
     return response.json()
 }
+export const downloadSalesReport =
+  async () => {
+
+    const response =
+      await fetch(
+        'http://localhost:5000/orders'
+      )
+
+    return response.json()
+}
