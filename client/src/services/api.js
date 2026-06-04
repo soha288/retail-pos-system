@@ -147,3 +147,51 @@ export const downloadSalesReport =
 
     return response.json()
 }
+const USER_API =
+  'http://localhost:5000/users'
+
+export const fetchUsers =
+  async () => {
+
+    const response =
+      await fetch(USER_API)
+
+    return response.json()
+}
+
+export const createUser =
+  async (userData) => {
+
+    const response =
+      await fetch(
+        USER_API,
+        {
+          method: 'POST',
+
+          headers: {
+            'Content-Type':
+              'application/json'
+          },
+
+          body: JSON.stringify(
+            userData
+          )
+        }
+      )
+
+    return response.json()
+}
+
+export const deleteUser =
+  async (id) => {
+
+    const response =
+      await fetch(
+        `${USER_API}/${id}`,
+        {
+          method: 'DELETE'
+        }
+      )
+
+    return response.json()
+}

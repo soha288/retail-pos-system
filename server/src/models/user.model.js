@@ -21,11 +21,11 @@ const userSchema = new mongoose.Schema(
     role: {
       type: String,
 
-      enum: [
-        'cashier',
-        'manager',
-        'admin'
-      ],
+     enum: [
+  'System Administrator',
+  'Inventory Manager',
+  'Store Cashier'
+],
 
       default: 'cashier'
     }

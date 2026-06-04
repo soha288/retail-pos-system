@@ -8,6 +8,8 @@ const authRoutes = require('./routes/auth.routes')
 
 const orderRoutes = require('./routes/order.routes')
 const dashboardRoutes = require('./routes/dashboard.routes')
+const userRoutes =
+  require('./routes/user.routes')
 const app = express()
 
 app.use(cors())
@@ -19,7 +21,10 @@ app.get('/', (req, res) => {
   res.send('Retail POS API Running')
 
 })
-
+app.use(
+  '/users',
+  userRoutes
+)
 app.use('/products', productRoutes)
 
 app.use('/auth', authRoutes)

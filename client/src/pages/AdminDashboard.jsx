@@ -5,19 +5,33 @@ import {
 
 import {
   ShieldCheck,
-  Users,
   ShoppingCart,
   DollarSign,
   Boxes,
-  LogOut
+  LogOut,
+  Package,
+  Users,
+  FileBarChart2
 } from 'lucide-react'
+
 import { saveAs }
   from 'file-saver'
 
 import {
-  downloadSalesReport
-} from '../services/api'
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  Cell,
+  PieChart,
+  Pie
+} from 'recharts'
+
 import {
+  downloadSalesReport,
+  fetchOrders,
   fetchDashboardStats
 } from '../services/api'
 
@@ -33,9 +47,14 @@ export default function AdminDashboard({
       totalRevenue: 0
     })
 
+  const [orders, setOrders] =
+    useState([])
+
   useEffect(() => {
 
     loadDashboardStats()
+
+    loadOrders()
 
   }, [])
 
@@ -60,6 +79,17 @@ export default function AdminDashboard({
       })
     }
 
+  const loadOrders =
+    async () => {
+
+      const data =
+        await fetchOrders()
+
+      setOrders(
+        data.data || []
+      )
+    }
+
   const handleLogout = () => {
 
     localStorage.removeItem(
@@ -68,37 +98,93 @@ export default function AdminDashboard({
 
     window.location.reload()
   }
+
   const handleExportReport =
-  async () => {
+    async () => {
 
-    const data =
-      await downloadSalesReport()
+      const data =
+        await downloadSalesReport()
 
-    const orders =
-      data.data || []
+      const orders =
+        data.data || []
 
-    let csvContent =
-      'Order ID,Date,Total Amount\n'
+      let csvContent =
+        'Order ID,Date,Total Amount\n'
 
-    orders.forEach(order => {
+      orders.forEach(order => {
 
-      csvContent +=
-        `${order._id},${order.createdAt},${order.totalAmount}\n`
-    })
+        csvContent +=
+          `${order._id},${order.createdAt},${order.totalAmount}\n`
+      })
 
-    const blob =
-      new Blob(
-        [csvContent],
-        {
-          type: 'text/csv;charset=utf-8;'
-        }
+      const blob =
+        new Blob(
+          [csvContent],
+          {
+            type:
+              'text/csv;charset=utf-8;'
+          }
+        )
+
+      saveAs(
+        blob,
+        'sales-report.csv'
       )
+    }
 
-    saveAs(
-      blob,
-      'sales-report.csv'
-    )
-}
+  const operationalData = [
+
+    {
+      name: 'Products',
+      value: stats.totalProducts,
+      color: '#2563eb'
+    },
+
+    {
+      name: 'Orders',
+      value: stats.totalOrders,
+      color: '#22c55e'
+    },
+
+    {
+      name: 'Low Stock',
+      value: stats.lowStockProducts,
+      color: '#ef4444'
+    }
+
+  ]
+
+  const revenueData = [
+
+    {
+      name: 'Revenue',
+      value: stats.totalRevenue,
+      color: '#f97316'
+    }
+
+  ]
+
+  const pieData = [
+
+    {
+      name: 'Products',
+      value: stats.totalProducts,
+      color: '#2563eb'
+    },
+
+    {
+      name: 'Orders',
+      value: stats.totalOrders,
+      color: '#22c55e'
+    },
+
+    {
+      name: 'Low Stock',
+      value: stats.lowStockProducts,
+      color: '#ef4444'
+    }
+
+  ]
 
   return (
 
@@ -127,13 +213,30 @@ export default function AdminDashboard({
             <button
               onClick={() =>
                 setActivePage(
+                  'inventory'
+                )
+              }
+              className="w-full hover:bg-slate-800 p-4 rounded-2xl text-left transition flex items-center gap-3"
+            >
+
+              <Package size={22} />
+
+              Inventory
+
+            </button>
+
+            <button
+              onClick={() =>
+                setActivePage(
                   'orders'
                 )
               }
-              className="w-full hover:bg-slate-800 p-4 rounded-2xl text-left transition"
+              className="w-full hover:bg-slate-800 p-4 rounded-2xl text-left transition flex items-center gap-3"
             >
 
-              Orders Management
+              <ShoppingCart size={22} />
+
+              POS Orders
 
             </button>
 
@@ -143,10 +246,25 @@ export default function AdminDashboard({
                   'users'
                 )
               }
-              className="w-full hover:bg-slate-800 p-4 rounded-2xl text-left transition"
+              className="w-full hover:bg-slate-800 p-4 rounded-2xl text-left transition flex items-center gap-3"
             >
 
-              User Management
+              <Users size={22} />
+
+              Users
+
+            </button>
+
+            <button
+              onClick={
+                handleExportReport
+              }
+              className="w-full hover:bg-slate-800 p-4 rounded-2xl text-left transition flex items-center gap-3"
+            >
+
+              <FileBarChart2 size={22} />
+
+              Reports
 
             </button>
 
@@ -282,71 +400,309 @@ export default function AdminDashboard({
           </div>
 
         </div>
-        <div className="mb-8">
 
-  <button
-    onClick={handleExportReport}
-    className="bg-green-600 hover:bg-green-700 transition text-white px-6 py-4 rounded-2xl font-bold shadow-lg"
-  >
-
-    Export Sales Report
-
-  </button>
-
-</div>
         <div className="mt-10 bg-white rounded-3xl shadow-lg p-8">
 
-          <h2 className="text-3xl font-bold text-slate-800 mb-6">
+          <div className="mb-8">
 
-            System Overview
+            <h2 className="text-3xl font-bold text-slate-800">
 
-          </h2>
+              Business Distribution
 
-          <div className="grid md:grid-cols-2 gap-8">
+            </h2>
 
-            <div className="border border-slate-200 rounded-2xl p-6">
+            <p className="text-slate-500 mt-2">
 
-              <h3 className="text-xl font-bold text-slate-700 mb-4">
+              Operational overview and inventory insights
 
-                Inventory Status
+            </p>
 
-              </h3>
+          </div>
 
-              <p className="text-slate-500 mb-3">
-                Total Products:
-                {' '}
-                {stats.totalProducts}
-              </p>
+          <div className="h-96">
 
-              <p className="text-red-500 font-semibold">
-                Low Stock Alerts:
-                {' '}
-                {stats.lowStockProducts}
+            <ResponsiveContainer
+              width="100%"
+              height="100%"
+            >
+
+              <PieChart>
+
+                <Pie
+                  data={pieData}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={140}
+                  label
+                >
+
+                  {
+
+                    pieData.map(
+                      (
+                        entry,
+                        index
+                      ) => (
+
+                        <Cell
+                          key={index}
+                          fill={entry.color}
+                        />
+
+                      )
+                    )
+
+                  }
+
+                </Pie>
+
+                <Tooltip />
+
+              </PieChart>
+
+            </ResponsiveContainer>
+
+          </div>
+
+        </div>
+
+        <div className="mt-10 grid grid-cols-1 xl:grid-cols-2 gap-8">
+
+          <div className="bg-white rounded-3xl shadow-lg p-8">
+
+            <div className="mb-8">
+
+              <h2 className="text-3xl font-bold text-slate-800">
+
+                Operational Analytics
+
+              </h2>
+
+            </div>
+
+            <div className="h-80">
+
+              <ResponsiveContainer
+                width="100%"
+                height="100%"
+              >
+
+                <BarChart
+                  data={operationalData}
+                >
+
+                  <XAxis dataKey="name" />
+
+                  <YAxis />
+
+                  <Tooltip />
+
+                  <Bar
+                    dataKey="value"
+                    radius={[10, 10, 0, 0]}
+                  >
+
+                    {
+
+                      operationalData.map(
+                        (
+                          entry,
+                          index
+                        ) => (
+
+                          <Cell
+                            key={index}
+                            fill={entry.color}
+                          />
+
+                        )
+                      )
+
+                    }
+
+                  </Bar>
+
+                </BarChart>
+
+              </ResponsiveContainer>
+
+            </div>
+
+          </div>
+
+          <div className="bg-white rounded-3xl shadow-lg p-8">
+
+            <div className="mb-8">
+
+              <h2 className="text-3xl font-bold text-slate-800">
+
+                Revenue Analytics
+
+              </h2>
+
+            </div>
+
+            <div className="h-80">
+
+              <ResponsiveContainer
+                width="100%"
+                height="100%"
+              >
+
+                <BarChart
+                  data={revenueData}
+                >
+
+                  <XAxis dataKey="name" />
+
+                  <YAxis />
+
+                  <Tooltip />
+
+                  <Bar
+                    dataKey="value"
+                    radius={[10, 10, 0, 0]}
+                  >
+
+                    {
+
+                      revenueData.map(
+                        (
+                          entry,
+                          index
+                        ) => (
+
+                          <Cell
+                            key={index}
+                            fill={entry.color}
+                          />
+
+                        )
+                      )
+
+                    }
+
+                  </Bar>
+
+                </BarChart>
+
+              </ResponsiveContainer>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div className="mt-10 bg-white rounded-3xl shadow-lg p-8">
+
+          <div className="flex justify-between items-center mb-8">
+
+            <div>
+
+              <h2 className="text-3xl font-bold text-slate-800">
+
+                Recent Orders
+
+              </h2>
+
+              <p className="text-slate-500 mt-2">
+
+                Latest transactions across POS system
+
               </p>
 
             </div>
 
-            <div className="border border-slate-200 rounded-2xl p-6">
+            <div className="bg-blue-100 text-blue-700 px-5 py-2 rounded-2xl font-semibold">
 
-              <h3 className="text-xl font-bold text-slate-700 mb-4">
-
-                Sales Analytics
-
-              </h3>
-
-              <p className="text-slate-500 mb-3">
-                Orders Processed:
-                {' '}
-                {stats.totalOrders}
-              </p>
-
-              <p className="text-green-600 font-semibold">
-                Revenue Generated:
-                {' '}
-                ₹{stats.totalRevenue}
-              </p>
+              {orders.length} Orders
 
             </div>
+
+          </div>
+
+          <div className="overflow-x-auto">
+
+            <table className="w-full">
+
+              <thead>
+
+                <tr className="border-b border-slate-200 text-slate-600">
+
+                  <th className="text-left py-4">
+                    Order ID
+                  </th>
+
+                  <th className="text-left py-4">
+                    Products
+                  </th>
+
+                  <th className="text-left py-4">
+                    Revenue
+                  </th>
+
+                  <th className="text-left py-4">
+                    Date
+                  </th>
+
+                </tr>
+
+              </thead>
+
+              <tbody>
+
+                {
+
+                  orders
+                    .slice(0, 5)
+                    .map(order => (
+
+                      <tr
+                        key={order._id}
+                        className="border-b border-slate-100 hover:bg-slate-50 transition"
+                      >
+
+                        <td className="py-5 font-semibold text-slate-700">
+
+                          #{order._id.slice(-6)}
+
+                        </td>
+
+                        <td className="py-5 text-slate-600">
+
+                          {
+                            order.products.length
+                          } Items
+
+                        </td>
+
+                        <td className="py-5 font-bold text-green-600">
+
+                          ₹{order.totalAmount}
+
+                        </td>
+
+                        <td className="py-5 text-slate-500">
+
+                          {
+                            new Date(
+                              order.createdAt
+                            ).toLocaleDateString()
+                          }
+
+                        </td>
+
+                      </tr>
+                    ))
+
+                }
+
+              </tbody>
+
+            </table>
 
           </div>
 

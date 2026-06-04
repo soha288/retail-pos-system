@@ -25,7 +25,11 @@ export default function Orders({setActivePage}) {
 
   const [orderHistory, setOrderHistory] =
     useState([])
+  const [showReceipt, setShowReceipt] =
+  useState(false)
 
+const [receiptData, setReceiptData] =
+  useState(null)
  useEffect(() => {
 
   loadProducts()
@@ -258,19 +262,29 @@ export default function Orders({setActivePage}) {
     return
   }
 
-  alert(
-    'Order placed successfully'
-  )
+  
 
   setCart([])
 
   setDiscount(0)
+  setReceiptData({
+  items: cart,
+  subtotal,
+  discount,
+  discountAmount,
+  totalPrice,
+  date: new Date()
+})
 
+setShowReceipt(true)
   loadProducts()
 
   loadOrders()
 }
+const printReceipt = () => {
 
+  window.print()
+}
   return (
 
     <div className="bg-slate-100 min-h-screen p-8">
@@ -703,7 +717,150 @@ export default function Orders({setActivePage}) {
             )
 
         }
+{
 
+  showReceipt
+
+    &&
+
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+
+      <div className="bg-white w-full max-w-md rounded-3xl shadow-2xl p-8">
+
+        <div className="text-center border-b pb-5 mb-5">
+
+          <h2 className="text-3xl font-bold text-slate-800">
+
+            Retail POS System
+
+          </h2>
+
+          <p className="text-slate-500 mt-2">
+
+            Customer Receipt
+
+          </p>
+
+        </div>
+
+        <div className="space-y-4 max-h-72 overflow-y-auto">
+
+          {
+
+            receiptData?.items.map(
+              item => (
+
+                <div
+                  key={item._id}
+                  className="flex justify-between"
+                >
+
+                  <div>
+
+                    <p className="font-semibold text-slate-700">
+
+                      {item.name}
+
+                    </p>
+
+                    <p className="text-sm text-slate-500">
+
+                      Qty:
+                      {' '}
+                      {item.quantity}
+
+                    </p>
+
+                  </div>
+
+                  <p className="font-bold">
+
+                    ₹
+                    {
+                      item.price *
+                      item.quantity
+                    }
+
+                  </p>
+
+                </div>
+
+              )
+            )
+
+          }
+
+        </div>
+
+        <div className="border-t mt-6 pt-6 space-y-3">
+
+          <div className="flex justify-between">
+
+            <p>
+              Subtotal
+            </p>
+
+            <p>
+              ₹{receiptData?.subtotal}
+            </p>
+
+          </div>
+
+          <div className="flex justify-between text-red-500">
+
+            <p>
+              Discount
+            </p>
+
+            <p>
+              - ₹{receiptData?.discountAmount}
+            </p>
+
+          </div>
+
+          <div className="flex justify-between text-2xl font-bold text-green-600">
+
+            <p>
+              Total
+            </p>
+
+            <p>
+              ₹{receiptData?.totalPrice}
+            </p>
+
+          </div>
+
+        </div>
+
+        <div className="mt-8 flex gap-4">
+
+          <button
+            onClick={printReceipt}
+            className="flex-1 bg-blue-600 hover:bg-blue-700 transition text-white py-4 rounded-2xl font-bold"
+          >
+
+            Print Receipt
+
+          </button>
+
+          <button
+            onClick={() =>
+              setShowReceipt(false)
+            }
+            className="flex-1 bg-slate-200 hover:bg-slate-300 transition py-4 rounded-2xl font-bold"
+          >
+
+            Close
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+}
       </div>
 
     </div>

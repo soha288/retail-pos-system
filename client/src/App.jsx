@@ -80,6 +80,22 @@ export default function App() {
 
       {
 
+        activePage ===
+          'inventory'
+
+          &&
+
+          <InventoryDashboard
+            user={user}
+            setActivePage={
+              setActivePage
+            }
+          />
+
+      }
+
+      {
+
         user.role ===
           'Store Cashier'
 
@@ -91,10 +107,11 @@ export default function App() {
           &&
 
           <CashierDashboard
-            setActivePage={
-              setActivePage
-            }
-          />
+  user={user}
+  setActivePage={
+    setActivePage
+  }
+/>
 
       }
 
@@ -125,7 +142,11 @@ export default function App() {
 
           &&
 
-          <Users />
+         <Users
+  setActivePage={
+    setActivePage
+  }
+/>
 
       }
 

@@ -1,134 +1,97 @@
 import {
   LayoutDashboard,
-  Boxes,
+  Package,
   ShoppingCart,
-  Users,
-  FileBarChart2,
-  Settings,
-  LogOut,
-  ShieldCheck
+  LogOut
 } from 'lucide-react'
 
 export default function Sidebar({
   setActivePage
 }) {
 
-  return (
-
-    <div className="w-72 bg-gradient-to-b from-slate-950 to-slate-900 text-white min-h-screen flex flex-col shadow-2xl">
-
-      <div className="p-8 border-b border-slate-800">
-
-        <h1 className="text-3xl font-bold tracking-wide">
-          POS & Inventory
-        </h1>
-
-        <p className="text-slate-400 mt-2 text-sm">
-          Management System
-        </p>
-
-      </div>
-
-      <div className="flex-1 p-5 space-y-3">
-
-        <button className="w-full flex items-center gap-4 bg-blue-600 hover:bg-blue-700 transition p-4 rounded-2xl shadow-lg">
-
-          <LayoutDashboard size={22} />
-
-          <span className="font-semibold">
-            Dashboard
-          </span>
-
-        </button>
-
-        <button className="w-full flex items-center gap-4 hover:bg-slate-800 transition p-4 rounded-2xl">
-
-          <Boxes size={22} />
-
-          <span>
-            Inventory Management
-          </span>
-
-        </button>
-
-        <button
-  onClick={() =>
-    setActivePage('orders')
-  }
-  className="w-full flex items-center gap-4 hover:bg-slate-800 transition p-4 rounded-2xl"
->
-
-  <ShoppingCart size={22} />
-
-  <span>
-    POS Orders
-  </span>
-
-</button>
-
-        <button className="w-full flex items-center gap-4 hover:bg-slate-800 transition p-4 rounded-2xl">
-
-          <Users size={22} />
-
-          <span>
-            Cashier Management
-          </span>
-
-        </button>
-
-        <button className="w-full flex items-center gap-4 hover:bg-slate-800 transition p-4 rounded-2xl">
-
-          <FileBarChart2 size={22} />
-
-          <span>
-            Reports & Analytics
-          </span>
-
-        </button>
-
-        <button className="w-full flex items-center gap-4 hover:bg-slate-800 transition p-4 rounded-2xl">
-
-          <ShieldCheck size={22} />
-
-          <span>
-            User Roles & RBAC
-          </span>
-
-        </button>
-
-      </div>
-
-      <div className="p-5 border-t border-slate-800 space-y-3">
-
-        <button className="w-full flex items-center gap-4 hover:bg-slate-800 transition p-4 rounded-2xl">
-
-          <Settings size={22} />
-
-          <span>
-            System Settings
-          </span>
-
-        </button>
-
-        <button
-  onClick={() => {
+  const handleLogout = () => {
 
     localStorage.removeItem(
       'user'
     )
 
     window.location.reload()
-  }}
-  className="w-full flex items-center gap-4 bg-red-600 hover:bg-red-700 transition p-4 rounded-2xl shadow-lg"
->
+  }
 
-  <LogOut size={22} />
+  return (
 
-  <span className="font-semibold">
-    Logout
-  </span>
+    <div className="w-72 bg-slate-950 text-white min-h-screen flex flex-col justify-between">
 
-</button>
+      <div>
+
+        <div className="p-8 border-b border-slate-800">
+
+          <h1 className="text-5xl font-bold leading-tight">
+
+            POS &
+            <br />
+            Inventory
+
+          </h1>
+
+          <p className="text-slate-400 mt-4">
+
+            Management System
+
+          </p>
+
+        </div>
+
+        <div className="p-5 space-y-4">
+
+          <button
+            onClick={() =>
+              setActivePage(
+                'inventory'
+              )
+            }
+            className="w-full bg-blue-600 hover:bg-blue-700 transition p-5 rounded-2xl flex items-center gap-4 text-lg font-semibold"
+          >
+
+            <LayoutDashboard size={24} />
+
+            Dashboard
+
+          </button>
+
+          
+
+          <button
+            onClick={() =>
+              setActivePage(
+                'orders'
+              )
+            }
+            className="w-full hover:bg-slate-800 transition p-5 rounded-2xl flex items-center gap-4 text-lg"
+          >
+
+            <ShoppingCart size={24} />
+
+            POS Orders
+
+          </button>
+
+        </div>
+
+      </div>
+
+      <div className="p-5">
+
+        <button
+          onClick={handleLogout}
+          className="w-full bg-red-600 hover:bg-red-700 transition p-5 rounded-2xl font-semibold flex items-center justify-center gap-3 text-lg"
+        >
+
+          <LogOut size={24} />
+
+          Logout
+
+        </button>
 
       </div>
 

@@ -12,16 +12,17 @@ import ProductForm from '../components/ProductForm'
 import ProductTable from '../components/ProductTable'
 
 import {
-  fetchProducts,
-fetchDashboardStats
-} from '../services/api'
-
-import {
+  ArrowLeft,
   Boxes,
   AlertTriangle,
   ShoppingCart,
-  Users
+  DollarSign
 } from 'lucide-react'
+
+import {
+  fetchProducts,
+  fetchDashboardStats
+} from '../services/api'
 
 export default function Dashboard({
   user,
@@ -30,56 +31,63 @@ export default function Dashboard({
 
   const [products, setProducts] =
     useState([])
-const [search, setSearch] =
-  useState('')
-const [stats, setStats] =
-  useState({
-    totalProducts: 0,
-    lowStockProducts: 0,
-    totalOrders: 0,
-    totalRevenue: 0
-  })
+
+  const [search, setSearch] =
+    useState('')
+
+  const [stats, setStats] =
+    useState({
+      totalProducts: 0,
+      lowStockProducts: 0,
+      totalOrders: 0,
+      totalRevenue: 0
+    })
+
   const loadDashboardStats =
-  async () => {
+    async () => {
 
-    const data =
-      await fetchDashboardStats()
+      const data =
+        await fetchDashboardStats()
 
-  setStats({
-  totalProducts:
-    data?.data?.totalProducts || 0,
+      setStats({
+        totalProducts:
+          data?.data?.totalProducts || 0,
 
-  lowStockProducts:
-    data?.data?.lowStockProducts || 0,
+        lowStockProducts:
+          data?.data?.lowStockProducts || 0,
 
-  totalOrders:
-    data?.data?.totalOrders || 0,
+        totalOrders:
+          data?.data?.totalOrders || 0,
 
-  totalRevenue:
-    data?.data?.totalRevenue || 0
-})
-}
-  const loadProducts = async () => {
+        totalRevenue:
+          data?.data?.totalRevenue || 0
+      })
+    }
 
-    const data =
-      await fetchProducts(search)
+  const loadProducts =
+    async () => {
 
-    setProducts(data.data || [])
-  }
+      const data =
+        await fetchProducts(search)
+
+      setProducts(
+        data.data || []
+      )
+    }
 
   useEffect(() => {
 
-  loadProducts()
+    loadProducts()
 
-  loadDashboardStats()
+    loadDashboardStats()
 
-}, [search])
+  }, [search])
 
   const lowStockProducts =
-  products.filter(
-    product =>
-      product.stock <= 5
-  )
+    products.filter(
+      product =>
+        product.stock <= 5
+    )
 
   return (
 
@@ -93,27 +101,59 @@ const [stats, setStats] =
       <div className="flex">
 
         <Sidebar
-  setActivePage={setActivePage}
-/>
+          setActivePage={
+            setActivePage
+          }
+        />
 
         <div className="flex-1 p-8">
+
+          {
+
+            user?.role ===
+              'System Administrator'
+
+              &&
+
+              <button
+                onClick={() =>
+                  setActivePage(
+                    'dashboard'
+                  )
+                }
+                className="mb-6 flex items-center gap-3 bg-slate-200 hover:bg-slate-300 transition px-5 py-3 rounded-2xl font-semibold"
+              >
+
+                <ArrowLeft size={22} />
+
+                Back To Admin Dashboard
+
+              </button>
+
+          }
 
           <div className="flex justify-between items-center mb-8">
 
             <div>
 
               <h1 className="text-4xl font-bold text-slate-800 mb-2">
+
                 Inventory Management Dashboard
+
               </h1>
 
               <p className="text-slate-500">
-                Welcome back! Here's what's happening in your store today.
+
+                Manage products, stock and inventory operations.
+
               </p>
 
             </div>
 
             <p className="text-slate-500 font-semibold text-lg">
+
               {user?.role}
+
             </p>
 
           </div>
@@ -127,11 +167,15 @@ const [stats, setStats] =
                 <div>
 
                   <h3 className="text-sm uppercase tracking-wide opacity-80">
+
                     Total Products
+
                   </h3>
 
                   <p className="text-4xl font-bold mt-3">
+
                     {stats.totalProducts}
+
                   </p>
 
                 </div>
@@ -145,7 +189,9 @@ const [stats, setStats] =
               </div>
 
               <p className="text-sm opacity-80">
+
                 Available Inventory
+
               </p>
 
             </div>
@@ -157,11 +203,15 @@ const [stats, setStats] =
                 <div>
 
                   <h3 className="text-sm uppercase tracking-wide opacity-80">
+
                     Low Stock Alerts
+
                   </h3>
 
                   <p className="text-4xl font-bold mt-3">
+
                     {stats.lowStockProducts}
+
                   </p>
 
                 </div>
@@ -175,7 +225,9 @@ const [stats, setStats] =
               </div>
 
               <p className="text-sm opacity-80">
+
                 Requires Attention
+
               </p>
 
             </div>
@@ -187,11 +239,15 @@ const [stats, setStats] =
                 <div>
 
                   <h3 className="text-sm uppercase tracking-wide opacity-80">
+
                     Active Orders
+
                   </h3>
 
                   <p className="text-4xl font-bold mt-3">
+
                     {stats.totalOrders}
+
                   </p>
 
                 </div>
@@ -205,7 +261,9 @@ const [stats, setStats] =
               </div>
 
               <p className="text-sm opacity-80">
+
                 Orders Today
+
               </p>
 
             </div>
@@ -217,25 +275,31 @@ const [stats, setStats] =
                 <div>
 
                   <h3 className="text-sm uppercase tracking-wide opacity-80">
-                    Total Revenue
+
+                    Revenue
+
                   </h3>
 
                   <p className="text-4xl font-bold mt-3">
+
                     ₹{stats.totalRevenue}
+
                   </p>
 
                 </div>
 
                 <div className="bg-white/20 p-4 rounded-2xl">
 
-                  <Users size={32} />
+                  <DollarSign size={32} />
 
                 </div>
 
               </div>
 
               <p className="text-sm opacity-80">
+
                 Revenue Generated
+
               </p>
 
             </div>
@@ -249,20 +313,22 @@ const [stats, setStats] =
               <ProductForm
                 refreshProducts={() => {
 
-  loadProducts()
+                  loadProducts()
 
-  loadDashboardStats()
-}}
+                  loadDashboardStats()
+
+                }}
               />
 
               <ProductTable
                 products={products}
                 refreshProducts={() => {
 
-  loadProducts()
+                  loadProducts()
 
-  loadDashboardStats()
-}}
+                  loadDashboardStats()
+
+                }}
               />
 
             </div>
@@ -271,36 +337,10 @@ const [stats, setStats] =
 
               <div className="bg-white rounded-2xl p-6 shadow-lg border border-slate-200">
 
-                <h2 className="text-2xl font-bold text-slate-700 mb-6">
-                  Quick Actions
-                </h2>
-
-                <div className="space-y-4">
-
-                  <button className="w-full bg-blue-600 hover:bg-blue-700 transition text-white p-4 rounded-xl font-semibold shadow-md">
-                    Add New Product
-                  </button>
-
-                  <button className="w-full bg-green-600 hover:bg-green-700 transition text-white p-4 rounded-xl font-semibold shadow-md">
-                    Stock Entry
-                  </button>
-
-                  <button className="w-full bg-purple-600 hover:bg-purple-700 transition text-white p-4 rounded-xl font-semibold shadow-md">
-                    Add Category
-                  </button>
-
-                  <button className="w-full bg-orange-500 hover:bg-orange-600 transition text-white p-4 rounded-xl font-semibold shadow-md">
-                    Sales Report
-                  </button>
-
-                </div>
-
-              </div>
-
-              <div className="bg-white rounded-2xl p-6 shadow-lg border border-slate-200">
-
                 <h2 className="text-2xl font-bold text-red-500 mb-6">
+
                   Low Stock Alerts
+
                 </h2>
 
                 {
@@ -310,7 +350,9 @@ const [stats, setStats] =
                     ?
 
                     <p className="text-slate-500">
+
                       No low stock alerts.
+
                     </p>
 
                     :
@@ -324,11 +366,15 @@ const [stats, setStats] =
                         >
 
                           <h3 className="font-semibold text-slate-700 text-lg">
+
                             {product.name}
+
                           </h3>
 
                           <p className="text-sm text-slate-500">
+
                             {product.category}
+
                           </p>
 
                           <div className="mt-2 inline-block bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-semibold">
