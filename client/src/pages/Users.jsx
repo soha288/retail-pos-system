@@ -203,7 +203,7 @@ export default function Users({
             className="border border-slate-300 p-4 rounded-2xl outline-none"
           >
 
-            
+           
 
             <option>
               Inventory Manager

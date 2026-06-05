@@ -1,5 +1,5 @@
-const authorizeRoles =
-  (...roles) => {
+const roleMiddleware =
+  (...allowedRoles) => {
 
     return (
       req,
@@ -8,14 +8,17 @@ const authorizeRoles =
     ) => {
 
       if (
-        !roles.includes(
+        !allowedRoles.includes(
           req.user.role
         )
       ) {
 
         return res.status(403).json({
+
           success: false,
-          message: 'Access denied'
+
+          message:
+            'Access denied'
         })
       }
 
@@ -23,6 +26,5 @@ const authorizeRoles =
     }
   }
 
-module.exports = {
-  authorizeRoles
-}
+module.exports =
+  roleMiddleware

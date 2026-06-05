@@ -153,24 +153,48 @@ const USER_API =
 export const fetchUsers =
   async () => {
 
-    const response =
-      await fetch(USER_API)
-
-    return response.json()
-}
-
-export const createUser =
-  async (userData) => {
+    const token =
+      localStorage.getItem(
+        'token'
+      )
 
     const response =
       await fetch(
         USER_API,
         {
+
+          headers: {
+
+            Authorization:
+              `Bearer ${token}`
+          }
+        }
+      )
+
+    return response.json()
+}
+export const createUser =
+  async (userData) => {
+
+    const token =
+      localStorage.getItem(
+        'token'
+      )
+
+    const response =
+      await fetch(
+        USER_API,
+        {
+
           method: 'POST',
 
           headers: {
+
             'Content-Type':
-              'application/json'
+              'application/json',
+
+            Authorization:
+              `Bearer ${token}`
           },
 
           body: JSON.stringify(
@@ -181,17 +205,54 @@ export const createUser =
 
     return response.json()
 }
-
 export const deleteUser =
   async (id) => {
+
+    const token =
+      localStorage.getItem(
+        'token'
+      )
 
     const response =
       await fetch(
         `${USER_API}/${id}`,
         {
-          method: 'DELETE'
+
+          method: 'DELETE',
+
+          headers: {
+
+            Authorization:
+              `Bearer ${token}`
+          }
         }
       )
 
     return response.json()
 }
+export const loginUser =
+  async (loginData) => {
+
+    const response =
+      await fetch(
+        'http://localhost:5000/auth/login',
+        {
+          method: 'POST',
+
+          headers: {
+            'Content-Type':
+              'application/json'
+          },
+
+          body: JSON.stringify(
+            loginData
+          )
+        }
+      )
+
+    return response.json()
+}
+const token =
+  localStorage.getItem(
+    'token'
+  )

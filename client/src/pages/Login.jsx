@@ -1,5 +1,9 @@
 import { useState } from 'react'
 
+import {
+  loginUser
+} from '../services/api'
+
 export default function Login({
   setUser
 }) {
@@ -10,56 +14,41 @@ export default function Login({
   const [password, setPassword] =
     useState('manager123')
 
-  const handleLogin = (e) => {
+  const handleLogin =
+    async (e) => {
 
-    e.preventDefault()
+      e.preventDefault()
 
-    const users = [
+      const data =
+        await loginUser({
+          email,
+          password
+        })
 
-      {
-        email: 'admin@pos.com',
-        password: 'admin123',
-        role: 'System Administrator',
-        name: 'Admin User'
-      },
+      if (!data.success) {
 
-      {
-        email: 'manager@pos.com',
-        password: 'manager123',
-        role: 'Inventory Manager',
-        name: 'Inventory Manager'
-      },
+        alert(
+          data.message ||
+          'Invalid Credentials'
+        )
 
-      {
-        email: 'cashier@pos.com',
-        password: 'cashier123',
-        role: 'Store Cashier',
-        name: 'Cashier User'
+        return
       }
 
-    ]
+      localStorage.setItem(
+  'token',
+  data.token
+)
 
-    const matchedUser =
-      users.find(
-        user =>
-          user.email === email &&
-          user.password === password
-      )
+localStorage.setItem(
+  'user',
+  JSON.stringify(
+    data.user
+  )
+)
 
-    if (!matchedUser) {
-
-      alert('Invalid Credentials')
-
-      return
+      setUser(data.user)
     }
-
-    localStorage.setItem(
-      'user',
-      JSON.stringify(matchedUser)
-    )
-
-    setUser(matchedUser)
-  }
 
   return (
 
@@ -96,7 +85,9 @@ export default function Login({
               type="email"
               value={email}
               onChange={(e) =>
-                setEmail(e.target.value)
+                setEmail(
+                  e.target.value
+                )
               }
               className="w-full border border-slate-300 rounded-2xl p-4 outline-none focus:ring-2 focus:ring-blue-300"
               placeholder="Enter email"
@@ -117,7 +108,9 @@ export default function Login({
               type="password"
               value={password}
               onChange={(e) =>
-                setPassword(e.target.value)
+                setPassword(
+                  e.target.value
+                )
               }
               className="w-full border border-slate-300 rounded-2xl p-4 outline-none focus:ring-2 focus:ring-blue-300"
               placeholder="Enter password"
@@ -140,24 +133,13 @@ export default function Login({
         <div className="mt-8 bg-slate-100 rounded-2xl p-5">
 
           <h3 className="font-bold text-slate-700 mb-3">
-            Demo Accounts
+            Database Connected
           </h3>
 
           <div className="space-y-2 text-sm text-slate-600">
 
             <p>
-              Admin:
-              admin@pos.com
-            </p>
-
-            <p>
-              Manager:
-              manager@pos.com
-            </p>
-
-            <p>
-              Cashier:
-              cashier@pos.com
+              Login using users stored in MongoDB Atlas
             </p>
 
           </div>

@@ -65,6 +65,7 @@ export default function AdminDashboard({
         await fetchDashboardStats()
 
       setStats({
+
         totalProducts:
           data?.data?.totalProducts || 0,
 
@@ -94,6 +95,10 @@ export default function AdminDashboard({
 
     localStorage.removeItem(
       'user'
+    )
+
+    localStorage.removeItem(
+      'token'
     )
 
     window.location.reload()
@@ -401,7 +406,7 @@ export default function AdminDashboard({
 
         </div>
 
-        <div className="mt-10 bg-white rounded-3xl shadow-lg p-8">
+        <div className="mt-10 bg-white rounded-3xl shadow-lg p-8 min-w-0">
 
           <div className="mb-8">
 
@@ -411,15 +416,9 @@ export default function AdminDashboard({
 
             </h2>
 
-            <p className="text-slate-500 mt-2">
-
-              Operational overview and inventory insights
-
-            </p>
-
           </div>
 
-          <div className="h-96">
+          <div className="h-96 w-full">
 
             <ResponsiveContainer
               width="100%"
@@ -470,19 +469,15 @@ export default function AdminDashboard({
 
         <div className="mt-10 grid grid-cols-1 xl:grid-cols-2 gap-8">
 
-          <div className="bg-white rounded-3xl shadow-lg p-8">
+          <div className="bg-white rounded-3xl shadow-lg p-8 min-w-0">
 
-            <div className="mb-8">
+            <h2 className="text-3xl font-bold text-slate-800 mb-8">
 
-              <h2 className="text-3xl font-bold text-slate-800">
+              Operational Analytics
 
-                Operational Analytics
+            </h2>
 
-              </h2>
-
-            </div>
-
-            <div className="h-80">
+            <div className="h-80 w-full">
 
               <ResponsiveContainer
                 width="100%"
@@ -532,19 +527,15 @@ export default function AdminDashboard({
 
           </div>
 
-          <div className="bg-white rounded-3xl shadow-lg p-8">
+          <div className="bg-white rounded-3xl shadow-lg p-8 min-w-0">
 
-            <div className="mb-8">
+            <h2 className="text-3xl font-bold text-slate-800 mb-8">
 
-              <h2 className="text-3xl font-bold text-slate-800">
+              Revenue Analytics
 
-                Revenue Analytics
+            </h2>
 
-              </h2>
-
-            </div>
-
-            <div className="h-80">
+            <div className="h-80 w-full">
 
               <ResponsiveContainer
                 width="100%"
