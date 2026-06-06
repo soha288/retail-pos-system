@@ -12,13 +12,16 @@ export default function CashierDashboard({
 
   const handleLogout = () => {
 
-    localStorage.removeItem(
-      'user'
-    )
+  localStorage.removeItem(
+    'user'
+  )
 
-    window.location.reload()
-  }
+  localStorage.removeItem(
+    'token'
+  )
 
+  window.location.reload()
+}
   return (
 
     <div className="bg-slate-100 min-h-screen">

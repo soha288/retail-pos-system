@@ -14,12 +14,30 @@ import Users from './pages/Users'
 
 export default function App() {
 
-  const [user, setUser] =
-    useState(
-      JSON.parse(
-        localStorage.getItem('user')
-      )
-    )
+  const storedUser =
+  localStorage.getItem(
+    'user'
+  )
+
+const storedToken =
+  localStorage.getItem(
+    'token'
+  )
+
+const [user, setUser] =
+  useState(
+
+    storedUser &&
+    storedToken
+
+      ?
+
+      JSON.parse(storedUser)
+
+      :
+
+      null
+  )
 
   const [activePage, setActivePage] =
     useState('dashboard')

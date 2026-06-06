@@ -93,17 +93,16 @@ export default function AdminDashboard({
 
   const handleLogout = () => {
 
-    localStorage.removeItem(
-      'user'
-    )
+  localStorage.removeItem(
+    'user'
+  )
 
-    localStorage.removeItem(
-      'token'
-    )
+  localStorage.removeItem(
+    'token'
+  )
 
-    window.location.reload()
-  }
-
+  window.location.reload()
+}
   const handleExportReport =
     async () => {
 
