@@ -31,7 +31,8 @@ export default function Dashboard({
 
   const [products, setProducts] =
     useState([])
-
+  const [loading, setLoading] =
+  useState(true)
   const [search, setSearch] =
     useState('')
 
@@ -64,16 +65,31 @@ export default function Dashboard({
       })
     }
 
-  const loadProducts =
-    async () => {
+ const loadProducts =
+  async () => {
+
+    try {
+
+      setLoading(true)
 
       const data =
-        await fetchProducts(search)
+        await fetchProducts(
+          search
+        )
 
       setProducts(
         data.data || []
       )
+
+    } catch (error) {
+
+      console.log(error)
+
+    } finally {
+
+      setLoading(false)
     }
+  }
 
   useEffect(() => {
 
@@ -319,17 +335,31 @@ export default function Dashboard({
 
                 }}
               />
+              {
 
-              <ProductTable
-                products={products}
-                refreshProducts={() => {
+  loading
 
-                  loadProducts()
+    ?
 
-                  loadDashboardStats()
+    <div className="bg-white rounded-3xl p-10 shadow-lg text-center text-slate-500 font-semibold">
 
-                }}
-              />
+      Loading products...
+
+    </div>
+
+    :
+
+    <ProductTable
+      products={products}
+      refreshProducts={() => {
+
+        loadProducts()
+
+        loadDashboardStats()
+      }}
+    />
+}
+              
 
             </div>
 
