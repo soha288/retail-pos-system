@@ -1,4 +1,8 @@
-import { useState } from 'react'
+import { useState }
+from 'react'
+
+import toast
+from 'react-hot-toast'
 
 import {
   createProduct
@@ -31,18 +35,19 @@ export default function ProductForm({
 
       e.preventDefault()
 
-      const data =
-        await createProduct({
-          ...formData,
-          price: Number(
-            formData.price
-          ),
-          stock: Number(
-            formData.stock
-          )
-        })
+      await createProduct({
+        ...formData,
+        price: Number(
+          formData.price
+        ),
+        stock: Number(
+          formData.stock
+        )
+      })
 
-      alert(data.message)
+      toast.success(
+        'Product Added Successfully'
+      )
 
       refreshProducts()
 
@@ -145,12 +150,12 @@ export default function ProductForm({
             </option>
 
             <option>Electronics</option>
-<option>Grocery</option>
-<option>Fashion</option>
-<option>Footwear</option>
-<option>Cosmetics</option>
-<option>Accessories</option>
-<option>Furniture</option>
+            <option>Grocery</option>
+            <option>Fashion</option>
+            <option>Footwear</option>
+            <option>Cosmetics</option>
+            <option>Accessories</option>
+            <option>Furniture</option>
 
           </select>
 

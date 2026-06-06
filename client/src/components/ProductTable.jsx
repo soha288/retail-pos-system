@@ -1,6 +1,10 @@
+import toast
+from 'react-hot-toast'
+
 import {
   deleteProduct,
-  updateStock
+  updateStock,
+  updateProduct
 } from '../services/api'
 
 export default function ProductTable({
@@ -8,22 +12,24 @@ export default function ProductTable({
   refreshProducts
 }) {
 
-  const handleDelete = async (id) => {
+  const handleDelete =
+    async (id) => {
 
-    const confirmDelete =
-      window.confirm(
-        'Delete this product?'
-      )
+      const confirmDelete =
+        window.confirm(
+          'Delete this product?'
+        )
 
-    if (!confirmDelete) return
+      if (!confirmDelete) return
 
-    const data =
       await deleteProduct(id)
 
-    alert(data.message)
+      toast.success(
+        'Product Deleted Successfully'
+      )
 
-    refreshProducts()
-  }
+      refreshProducts()
+    }
 
   const handleStockUpdate =
     async (id, quantity) => {
@@ -34,14 +40,15 @@ export default function ProductTable({
           quantity
         )
 
-      alert(data.message)
+      toast.success(
+        data.message
+      )
 
       refreshProducts()
     }
 
-  const handleEdit = async (
-    product
-  ) => {
+ const handleEdit =
+  async (product) => {
 
     const updatedName =
       prompt(
@@ -60,30 +67,26 @@ export default function ProductTable({
       !updatedPrice
     ) return
 
-    const response =
-      await fetch(
-        `http://localhost:5000/products/${product._id}`,
+    const data =
+      await updateProduct(
+        product._id,
         {
-          method: 'PUT',
-
-          headers: {
-            'Content-Type': 'application/json'
-          },
-
-          body: JSON.stringify({
-            name: updatedName,
-            price: Number(updatedPrice),
-            category: product.category,
-            stock: product.stock,
-            sku: product.sku
-          })
+          name: updatedName,
+          price: Number(
+            updatedPrice
+          ),
+          category:
+            product.category,
+          stock:
+            product.stock,
+          sku:
+            product.sku
         }
       )
 
-    const data =
-      await response.json()
-
-    alert(data.message)
+    toast.success(
+      data.message
+    )
 
     refreshProducts()
   }
@@ -274,7 +277,9 @@ export default function ProductTable({
 
                           <button
                             onClick={() =>
-                              handleEdit(product)
+                              handleEdit(
+                                product
+                              )
                             }
                             className="bg-blue-600 hover:bg-blue-700 transition text-white px-4 py-2 rounded-lg text-sm"
                           >

@@ -1,5 +1,6 @@
 import { useState } from 'react'
-
+import toast
+from 'react-hot-toast'
 import {
   loginUser
 } from '../services/api'
@@ -27,10 +28,10 @@ export default function Login({
 
       if (!data.success) {
 
-        alert(
-          data.message ||
-          'Invalid Credentials'
-        )
+        toast.error(
+  data.message ||
+  'Invalid Credentials'
+)
 
         return
       }
@@ -48,6 +49,9 @@ localStorage.setItem(
 )
 
       setUser(data.user)
+      toast.success(
+  'Login Successful'
+)
     }
 
   return (

@@ -1,3 +1,5 @@
+const BASE_URL =
+  'http://localhost:5000'
 const PRODUCT_API =
   'http://localhost:5000/products'
 
@@ -256,3 +258,25 @@ const token =
   localStorage.getItem(
     'token'
   )
+  export const updateProduct =
+  async (id, productData) => {
+
+    const response =
+      await fetch(
+        `${BASE_URL}/products/${id}`,
+        {
+          method: 'PUT',
+
+          headers: {
+            'Content-Type':
+              'application/json'
+          },
+
+          body: JSON.stringify(
+            productData
+          )
+        }
+      )
+
+    return response.json()
+  }

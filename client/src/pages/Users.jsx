@@ -2,7 +2,8 @@ import {
   useEffect,
   useState
 } from 'react'
-
+import toast
+from 'react-hot-toast'
 import {
   Trash2,
   UserPlus,
@@ -65,9 +66,9 @@ export default function Users({
         !formData.password
       ) {
 
-        alert(
-          'Please fill all fields'
-        )
+       toast.error(
+  'Please fill all fields'
+)
 
         return
       }
@@ -75,7 +76,9 @@ export default function Users({
       await createUser(
         formData
       )
-
+      toast.success(
+  'User Added Successfully'
+)
       loadUsers()
 
       setFormData({
@@ -90,7 +93,9 @@ export default function Users({
     async (id) => {
 
       await deleteUser(id)
-
+      toast.success(
+  'User Deleted Successfully'
+)
       loadUsers()
     }
 
