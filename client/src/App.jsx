@@ -11,7 +11,8 @@ import Login from './pages/Login'
 import Orders from './pages/Orders'
 
 import Users from './pages/Users'
-
+import ProtectedRoute
+from './components/ProtectedRoute'
 export default function App() {
 
   const storedUser =
@@ -98,19 +99,33 @@ const [user, setUser] =
 
       {
 
-        activePage ===
-          'inventory'
+  activePage ===
+    'inventory'
 
-          &&
+    &&
 
-          <InventoryDashboard
-            user={user}
-            setActivePage={
-              setActivePage
-            }
-          />
+    <ProtectedRoute
 
-      }
+      allowedRoles={[
+
+        'System Administrator',
+
+        'Inventory Manager'
+      ]}
+
+    >
+
+      <InventoryDashboard
+
+        user={user}
+
+        setActivePage={
+          setActivePage
+        }
+      />
+
+    </ProtectedRoute>
+}
 
       {
 
@@ -132,41 +147,58 @@ const [user, setUser] =
 />
 
       }
+{
+
+  activePage ===
+    'orders'
+
+    &&
+
+    <ProtectedRoute
+
+      allowedRoles={[
+
+        'System Administrator',
+
+        'Inventory Manager',
+
+        'Store Cashier'
+      ]}
+
+    >
+
+      <Orders
+        setActivePage={
+          setActivePage
+        }
+      />
+
+    </ProtectedRoute>
+}
 
       {
 
-        activePage ===
-          'orders'
+  activePage ===
+    'users'
 
-          &&
+    &&
 
-          <Orders
-            setActivePage={
-              setActivePage
-            }
-          />
+    <ProtectedRoute
 
-      }
+      allowedRoles={[
+        'System Administrator'
+      ]}
 
-      {
+    >
 
-        activePage ===
-          'users'
+      <Users
+        setActivePage={
+          setActivePage
+        }
+      />
 
-          &&
-
-          user.role ===
-            'System Administrator'
-
-          &&
-
-         <Users
-  setActivePage={
-    setActivePage
-  }
-/>
-
-      }
+    </ProtectedRoute>
+}
 
     </>
 

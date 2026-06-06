@@ -144,25 +144,13 @@ export default function ProductForm({
               Select Category
             </option>
 
-            <option>
-              Electronics
-            </option>
-
-            <option>
-              Grocery
-            </option>
-
-            <option>
-              Fashion
-            </option>
-
-            <option>
-              Furniture
-            </option>
-
-            <option>
-              Accessories
-            </option>
+            <option>Electronics</option>
+<option>Grocery</option>
+<option>Fashion</option>
+<option>Footwear</option>
+<option>Cosmetics</option>
+<option>Accessories</option>
+<option>Furniture</option>
 
           </select>
 
