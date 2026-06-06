@@ -1,156 +1,180 @@
 const BASE_URL =
   'http://localhost:5000'
+
 const PRODUCT_API =
-  'http://localhost:5000/products'
+  `${BASE_URL}/products`
 
 const ORDER_API =
-  'http://localhost:5000/orders'
+  `${BASE_URL}/orders`
 
-export const fetchProducts = async (
-  search = ''
-) => {
+const USER_API =
+  `${BASE_URL}/users`
 
-  const response = await fetch(
-    `${PRODUCT_API}?search=${search}`
-  )
+// PRODUCTS
 
-  return response.json()
-}
+export const fetchProducts =
+  async (search = '') => {
 
-export const createProduct = async (
-  productData
-) => {
-
-  const response = await fetch(
-    PRODUCT_API,
-    {
-      method: 'POST',
-
-      headers: {
-        'Content-Type': 'application/json'
-      },
-
-      body: JSON.stringify(
-        productData
+    const response =
+      await fetch(
+        `${PRODUCT_API}?search=${search}`
       )
-    }
-  )
 
-  return response.json()
-}
+    return response.json()
+  }
 
-export const deleteProduct = async (
-  id
-) => {
+export const createProduct =
+  async (productData) => {
 
-  const response = await fetch(
-    `${PRODUCT_API}/${id}`,
-    {
-      method: 'DELETE'
-    }
-  )
+    const response =
+      await fetch(
+        PRODUCT_API,
+        {
+          method: 'POST',
 
-  return response.json()
-}
+          headers: {
+            'Content-Type':
+              'application/json'
+          },
 
-export const updateProduct = async (
-  id,
-  updatedData
-) => {
-
-  const response = await fetch(
-    `${PRODUCT_API}/${id}`,
-    {
-      method: 'PUT',
-
-      headers: {
-        'Content-Type': 'application/json'
-      },
-
-      body: JSON.stringify(
-        updatedData
+          body: JSON.stringify(
+            productData
+          )
+        }
       )
-    }
-  )
 
-  return response.json()
-}
+    return response.json()
+  }
 
-export const updateStock = async (
-  id,
-  quantity
-) => {
+export const deleteProduct =
+  async (id) => {
 
-  const response = await fetch(
-    `${PRODUCT_API}/${id}/stock`,
-    {
-      method: 'PATCH',
-
-      headers: {
-        'Content-Type': 'application/json'
-      },
-
-      body: JSON.stringify({
-        quantity
-      })
-    }
-  )
-
-  return response.json()
-}
-
-export const createOrder = async (
-  orderData
-) => {
-
-  const response = await fetch(
-    ORDER_API,
-    {
-      method: 'POST',
-
-      headers: {
-        'Content-Type': 'application/json'
-      },
-
-      body: JSON.stringify(
-        orderData
+    const response =
+      await fetch(
+        `${PRODUCT_API}/${id}`,
+        {
+          method: 'DELETE'
+        }
       )
-    }
-  )
 
-  return response.json()
-}
+    return response.json()
+  }
 
-export const fetchOrders = async () => {
+export const updateProduct =
+  async (
+    id,
+    updatedData
+  ) => {
 
-  const response = await fetch(
-    ORDER_API
-  )
+    const response =
+      await fetch(
+        `${PRODUCT_API}/${id}`,
+        {
+          method: 'PUT',
 
-  return response.json()
-}
+          headers: {
+            'Content-Type':
+              'application/json'
+          },
+
+          body: JSON.stringify(
+            updatedData
+          )
+        }
+      )
+
+    return response.json()
+  }
+
+export const updateStock =
+  async (
+    id,
+    quantity
+  ) => {
+
+    const response =
+      await fetch(
+        `${PRODUCT_API}/${id}/stock`,
+        {
+          method: 'PATCH',
+
+          headers: {
+            'Content-Type':
+              'application/json'
+          },
+
+          body: JSON.stringify({
+            quantity
+          })
+        }
+      )
+
+    return response.json()
+  }
+
+// ORDERS
+
+export const createOrder =
+  async (orderData) => {
+
+    const response =
+      await fetch(
+        ORDER_API,
+        {
+          method: 'POST',
+
+          headers: {
+            'Content-Type':
+              'application/json'
+          },
+
+          body: JSON.stringify(
+            orderData
+          )
+        }
+      )
+
+    return response.json()
+  }
+
+export const fetchOrders =
+  async () => {
+
+    const response =
+      await fetch(
+        ORDER_API
+      )
+
+    return response.json()
+  }
+
+// DASHBOARD
+
 export const fetchDashboardStats =
   async () => {
 
     const response =
       await fetch(
-        'http://localhost:5000/dashboard'
+        `${BASE_URL}/dashboard`
       )
 
     return response.json()
-}
+  }
+
+// REPORTS
+
 export const downloadSalesReport =
   async () => {
 
     const response =
       await fetch(
-        'http://localhost:5000/orders'
+        `${BASE_URL}/orders`
       )
 
     return response.json()
-}
-const USER_API =
-  'http://localhost:5000/users'
+  }
+
+// USERS
 
 export const fetchUsers =
   async () => {
@@ -164,9 +188,7 @@ export const fetchUsers =
       await fetch(
         USER_API,
         {
-
           headers: {
-
             Authorization:
               `Bearer ${token}`
           }
@@ -174,7 +196,8 @@ export const fetchUsers =
       )
 
     return response.json()
-}
+  }
+
 export const createUser =
   async (userData) => {
 
@@ -187,11 +210,9 @@ export const createUser =
       await fetch(
         USER_API,
         {
-
           method: 'POST',
 
           headers: {
-
             'Content-Type':
               'application/json',
 
@@ -206,7 +227,8 @@ export const createUser =
       )
 
     return response.json()
-}
+  }
+
 export const deleteUser =
   async (id) => {
 
@@ -219,11 +241,9 @@ export const deleteUser =
       await fetch(
         `${USER_API}/${id}`,
         {
-
           method: 'DELETE',
 
           headers: {
-
             Authorization:
               `Bearer ${token}`
           }
@@ -231,13 +251,16 @@ export const deleteUser =
       )
 
     return response.json()
-}
+  }
+
+// AUTH
+
 export const loginUser =
   async (loginData) => {
 
     const response =
       await fetch(
-        'http://localhost:5000/auth/login',
+        `${BASE_URL}/auth/login`,
         {
           method: 'POST',
 
@@ -248,32 +271,6 @@ export const loginUser =
 
           body: JSON.stringify(
             loginData
-          )
-        }
-      )
-
-    return response.json()
-}
-const token =
-  localStorage.getItem(
-    'token'
-  )
-  export const updateProduct =
-  async (id, productData) => {
-
-    const response =
-      await fetch(
-        `${BASE_URL}/products/${id}`,
-        {
-          method: 'PUT',
-
-          headers: {
-            'Content-Type':
-              'application/json'
-          },
-
-          body: JSON.stringify(
-            productData
           )
         }
       )
