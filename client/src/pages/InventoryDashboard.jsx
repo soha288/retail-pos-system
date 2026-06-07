@@ -202,7 +202,58 @@ export default function Dashboard({
             </p>
 
           </div>
+<div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-5 mb-8">
 
+  <h2 className="text-xl font-bold text-slate-800 mb-2">
+
+    Inventory Summary
+
+  </h2>
+
+  <p className="text-slate-600 leading-relaxed">
+
+    {
+
+      stats.lowStockProducts > 0
+
+        ?
+
+        `Attention required for ${stats.lowStockProducts} low stock products.`
+
+        :
+
+        'All inventory products are sufficiently stocked.'
+    }
+
+    {' '}
+
+    Total revenue generated is
+
+    {' '}
+
+    <span className="font-bold text-green-600">
+
+      ₹{stats.totalRevenue}
+
+    </span>
+
+    {' '}
+
+    across
+
+    {' '}
+
+    <span className="font-bold text-blue-600">
+
+      {stats.totalOrders}
+
+    </span>
+
+    orders.
+
+  </p>
+
+</div>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
 
             <div className="bg-gradient-to-r from-blue-600 to-blue-500 rounded-2xl p-6 shadow-lg text-white">
