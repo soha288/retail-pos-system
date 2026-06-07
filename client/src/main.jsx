@@ -10,6 +10,33 @@ createRoot(document.getElementById('root')).render(
     <App />
     <Toaster
   position="top-right"
+
+  toastOptions={{
+
+    duration: 3000,
+
+    style: {
+      background: '#ffffff',
+      color: '#0f172a',
+      borderRadius: '16px',
+      padding: '16px',
+      fontWeight: '600'
+    },
+
+    success: {
+      style: {
+        border:
+          '2px solid #22c55e'
+      }
+    },
+
+    error: {
+      style: {
+        border:
+          '2px solid #ef4444'
+      }
+    }
+  }}
 />
   </StrictMode>,
 )
