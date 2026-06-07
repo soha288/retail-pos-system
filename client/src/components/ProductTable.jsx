@@ -170,13 +170,27 @@ export default function ProductTable({
                 <tr>
 
                   <td
-                    colSpan="8"
-                    className="text-center py-10 text-slate-500"
-                  >
+  colSpan="8"
+  className="text-center py-10"
+>
 
-                    No products found
+  <div className="flex flex-col items-center justify-center">
 
-                  </td>
+    <h2 className="text-2xl font-bold text-slate-700 mb-2">
+
+      No Products Available
+
+    </h2>
+
+    <p className="text-slate-500">
+
+      Add inventory products to get started
+
+    </p>
+
+  </div>
+
+</td>
 
                 </tr>
 
@@ -253,21 +267,30 @@ export default function ProductTable({
 
                         {
 
-                          product.lowStock
+  product.stock <= 5
 
-                            ?
+    ?
 
-                            <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-semibold">
-                              Low Stock
-                            </span>
+    <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-semibold">
+      Low Stock
+    </span>
 
-                            :
+    :
 
-                            <span className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-sm font-semibold">
-                              In Stock
-                            </span>
+    product.stock <= 15
 
-                        }
+      ?
+
+      <span className="bg-yellow-100 text-yellow-600 px-3 py-1 rounded-full text-sm font-semibold">
+        Medium Stock
+      </span>
+
+      :
+
+      <span className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-sm font-semibold">
+        In Stock
+      </span>
+}
 
                       </td>
 
