@@ -151,7 +151,36 @@ export default function Dashboard({
           <div className="flex justify-between items-center mb-8">
 
             <div>
+              <h2 className="text-lg text-blue-600 font-semibold mb-2">
 
+  {
+
+    new Date().getHours() < 12
+
+      ?
+
+      'Good Morning'
+
+      :
+
+      new Date().getHours() < 18
+
+        ?
+
+        'Good Afternoon'
+
+        :
+
+        'Good Evening'
+
+  },
+
+  {' '}
+  {user?.name}
+
+  👋
+
+</h2>
               <h1 className="text-4xl font-bold text-slate-800 mb-2">
 
                 Inventory Management Dashboard
