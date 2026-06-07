@@ -31,8 +31,10 @@ export default function Dashboard({
 
   const [products, setProducts] =
     useState([])
+
   const [loading, setLoading] =
-  useState(true)
+    useState(true)
+
   const [search, setSearch] =
     useState('')
 
@@ -65,31 +67,31 @@ export default function Dashboard({
       })
     }
 
- const loadProducts =
-  async () => {
+  const loadProducts =
+    async () => {
 
-    try {
+      try {
 
-      setLoading(true)
+        setLoading(true)
 
-      const data =
-        await fetchProducts(
-          search
+        const data =
+          await fetchProducts(
+            search
+          )
+
+        setProducts(
+          data.data || []
         )
 
-      setProducts(
-        data.data || []
-      )
+      } catch (error) {
 
-    } catch (error) {
+        console.log(error)
 
-      console.log(error)
+      } finally {
 
-    } finally {
-
-      setLoading(false)
+        setLoading(false)
+      }
     }
-  }
 
   useEffect(() => {
 
@@ -151,36 +153,38 @@ export default function Dashboard({
           <div className="flex justify-between items-center mb-8">
 
             <div>
+
               <h2 className="text-lg text-blue-600 font-semibold mb-2">
 
-  {
+                {
 
-    new Date().getHours() < 12
+                  new Date().getHours() < 12
 
-      ?
+                    ?
 
-      'Good Morning'
+                    'Good Morning'
 
-      :
+                    :
 
-      new Date().getHours() < 18
+                    new Date().getHours() < 18
 
-        ?
+                      ?
 
-        'Good Afternoon'
+                      'Good Afternoon'
 
-        :
+                      :
 
-        'Good Evening'
+                      'Good Evening'
 
-  },
+                },
 
-  {' '}
-  {user?.name}
+                {' '}
+                {user?.name}
 
-  👋
+                👋
 
-</h2>
+              </h2>
+
               <h1 className="text-4xl font-bold text-slate-800 mb-2">
 
                 Inventory Management Dashboard
@@ -202,58 +206,62 @@ export default function Dashboard({
             </p>
 
           </div>
-<div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-5 mb-8">
 
-  <h2 className="text-xl font-bold text-slate-800 mb-2">
+          <div className="bg-white rounded-2xl shadow-lg border border-slate-200 p-5 mb-8">
 
-    Inventory Summary
+            <h2 className="text-xl font-bold text-slate-800 mb-2">
 
-  </h2>
+              Inventory Summary
 
-  <p className="text-slate-600 leading-relaxed">
+            </h2>
 
-    {
+            <p className="text-slate-600 leading-relaxed">
 
-      stats.lowStockProducts > 0
+              {
 
-        ?
+                stats.lowStockProducts > 0
 
-        `Attention required for ${stats.lowStockProducts} low stock products.`
+                  ?
 
-        :
+                  `Attention required for ${stats.lowStockProducts} low stock products.`
 
-        'All inventory products are sufficiently stocked.'
-    }
+                  :
 
-    {' '}
+                  'All inventory products are sufficiently stocked.'
+              }
 
-    Total revenue generated is
+              {' '}
 
-    {' '}
+              Total revenue generated is
 
-    <span className="font-bold text-green-600">
+              {' '}
 
-      ₹{stats.totalRevenue}
+              <span className="font-bold text-green-600">
 
-    </span>
+                ₹{stats.totalRevenue}
 
-    {' '}
+              </span>
 
-    across
+              {' '}
 
-    {' '}
+              across
 
-    <span className="font-bold text-blue-600">
+              {' '}
 
-      {stats.totalOrders}
+              <span className="font-bold text-blue-600">
 
-    </span>
+                {stats.totalOrders}
 
-    orders.
+              </span>
 
-  </p>
+              {' '}
 
-</div>
+              orders.
+
+            </p>
+
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
 
             <div className="bg-gradient-to-r from-blue-600 to-blue-500 rounded-2xl p-6 shadow-lg text-white">
@@ -289,13 +297,15 @@ export default function Dashboard({
                 Available Inventory
 
               </p>
-<p className="text-xs text-white/70 mt-2">
 
-  Last Updated:
-  {' '}
-  {new Date().toLocaleTimeString()}
+              <p className="text-xs text-white/70 mt-2">
 
-</p>
+                Last Updated:
+                {' '}
+                {new Date().toLocaleTimeString()}
+
+              </p>
+
             </div>
 
             <div className="bg-gradient-to-r from-red-500 to-orange-400 rounded-2xl p-6 shadow-lg text-white">
@@ -315,7 +325,7 @@ export default function Dashboard({
                     {stats.lowStockProducts}
 
                   </p>
-                   
+
                 </div>
 
                 <div className="bg-white/20 p-4 rounded-2xl">
@@ -331,13 +341,15 @@ export default function Dashboard({
                 Requires Attention
 
               </p>
-<p className="text-xs text-white/70 mt-2">
 
-  Last Updated:
-  {' '}
-  {new Date().toLocaleTimeString()}
+              <p className="text-xs text-white/70 mt-2">
 
-</p>
+                Last Updated:
+                {' '}
+                {new Date().toLocaleTimeString()}
+
+              </p>
+
             </div>
 
             <div className="bg-gradient-to-r from-green-500 to-emerald-400 rounded-2xl p-6 shadow-lg text-white">
@@ -373,13 +385,15 @@ export default function Dashboard({
                 Orders Today
 
               </p>
-<p className="text-xs text-white/70 mt-2">
 
-  Last Updated:
-  {' '}
-  {new Date().toLocaleTimeString()}
+              <p className="text-xs text-white/70 mt-2">
 
-</p>
+                Last Updated:
+                {' '}
+                {new Date().toLocaleTimeString()}
+
+              </p>
+
             </div>
 
             <div className="bg-gradient-to-r from-purple-600 to-pink-500 rounded-2xl p-6 shadow-lg text-white">
@@ -415,13 +429,15 @@ export default function Dashboard({
                 Revenue Generated
 
               </p>
-<p className="text-xs text-white/70 mt-2">
 
-  Last Updated:
-  {' '}
-  {new Date().toLocaleTimeString()}
+              <p className="text-xs text-white/70 mt-2">
 
-</p>
+                Last Updated:
+                {' '}
+                {new Date().toLocaleTimeString()}
+
+              </p>
+
             </div>
 
           </div>
@@ -439,35 +455,97 @@ export default function Dashboard({
 
                 }}
               />
+
               {
 
-  loading
+                loading
 
-    ?
+                  ?
 
-    <div className="bg-white rounded-3xl p-10 shadow-lg text-center text-slate-500 font-semibold">
+                  <div className="bg-white rounded-3xl p-10 shadow-lg text-center text-slate-500 font-semibold">
 
-      Loading products...
+                    Loading products...
 
-    </div>
+                  </div>
 
-    :
+                  :
 
-    <ProductTable
-      products={products}
-      refreshProducts={() => {
+                  <ProductTable
+                    products={products}
+                    refreshProducts={() => {
 
-        loadProducts()
+                      loadProducts()
 
-        loadDashboardStats()
-      }}
-    />
-}
-              
+                      loadDashboardStats()
+                    }}
+                  />
+              }
 
             </div>
 
             <div className="space-y-6">
+
+              <div className="bg-white rounded-2xl p-6 shadow-lg border border-slate-200">
+
+                <h2 className="text-2xl font-bold text-slate-800 mb-6">
+
+                  System Status
+
+                </h2>
+
+                <div className="space-y-4">
+
+                  <div className="flex items-center justify-between">
+
+                    <span className="text-slate-600">
+
+                      Database
+
+                    </span>
+
+                    <span className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-sm font-semibold">
+
+                      Connected
+
+                    </span>
+
+                  </div>
+
+                  <div className="flex items-center justify-between">
+
+                    <span className="text-slate-600">
+
+                      API Server
+
+                    </span>
+
+                    <span className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-sm font-semibold">
+
+                      Active
+
+                    </span>
+
+                  </div>
+
+                  <div className="flex items-center justify-between">
+
+                    <span className="text-slate-600">
+
+                      Inventory Sync
+
+                    </span>
+
+                    <span className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-sm font-semibold">
+
+                      Running
+
+                    </span>
+
+                  </div>
+
+                </div>
+
+              </div>
 
               <div className="bg-white rounded-2xl p-6 shadow-lg border border-slate-200">
 
