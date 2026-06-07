@@ -209,7 +209,13 @@ export default function Dashboard({
                 Available Inventory
 
               </p>
+<p className="text-xs text-white/70 mt-2">
 
+  Last Updated:
+  {' '}
+  {new Date().toLocaleTimeString()}
+
+</p>
             </div>
 
             <div className="bg-gradient-to-r from-red-500 to-orange-400 rounded-2xl p-6 shadow-lg text-white">
@@ -229,7 +235,7 @@ export default function Dashboard({
                     {stats.lowStockProducts}
 
                   </p>
-
+                   
                 </div>
 
                 <div className="bg-white/20 p-4 rounded-2xl">
@@ -245,7 +251,13 @@ export default function Dashboard({
                 Requires Attention
 
               </p>
+<p className="text-xs text-white/70 mt-2">
 
+  Last Updated:
+  {' '}
+  {new Date().toLocaleTimeString()}
+
+</p>
             </div>
 
             <div className="bg-gradient-to-r from-green-500 to-emerald-400 rounded-2xl p-6 shadow-lg text-white">
@@ -281,7 +293,13 @@ export default function Dashboard({
                 Orders Today
 
               </p>
+<p className="text-xs text-white/70 mt-2">
 
+  Last Updated:
+  {' '}
+  {new Date().toLocaleTimeString()}
+
+</p>
             </div>
 
             <div className="bg-gradient-to-r from-purple-600 to-pink-500 rounded-2xl p-6 shadow-lg text-white">
@@ -317,7 +335,13 @@ export default function Dashboard({
                 Revenue Generated
 
               </p>
+<p className="text-xs text-white/70 mt-2">
 
+  Last Updated:
+  {' '}
+  {new Date().toLocaleTimeString()}
+
+</p>
             </div>
 
           </div>
