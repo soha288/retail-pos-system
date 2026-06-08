@@ -1,5 +1,5 @@
 const BASE_URL =
-  'https://retail-pos-system-9alv.onrender.com/'
+  'https://retail-pos-system-9alv.onrender.com'
 
 const PRODUCT_API =
   `${BASE_URL}/products`
