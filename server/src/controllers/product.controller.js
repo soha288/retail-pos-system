@@ -44,8 +44,8 @@ const products = await Product.find(query)
 const updatedProducts = products.map(product => {
   const productObj = product.toObject()
 
-  productObj.lowStock = product.stock < 5
-  productObj.warning=product.stock<5?'Low stock alert':'stock available'
+  productObj.lowStock = product.stock <=5
+  productObj.warning=product.stock<=5?'Low stock alert':'stock available'
   return productObj
 })
 
