@@ -15,7 +15,7 @@ const getDashboardStats =
       const lowStockProducts =
         await Product.countDocuments({
           stock: {
-            $lt: 5
+            $lte: 5
           }
         })
 
@@ -36,7 +36,7 @@ const getDashboardStats =
       const lowStockItems =
         await Product.find({
           stock: {
-            $lt: 5
+            $lte: 5
           }
         })
 
