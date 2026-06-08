@@ -68,7 +68,14 @@ The application helps retail stores manage:
 * Admin-Only Access
 
 ---
+#Live Deployment Links
+*Frontend Deployment
 
+https://retail-pos-system-henna.vercel.app/
+
+*Backend Deployment
+
+https://retail-pos-system-9alv.onrender.com/
 # Tech Stack
 
 ## Frontend
