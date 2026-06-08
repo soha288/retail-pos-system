@@ -219,11 +219,11 @@ export default function Dashboard({
 
               {
 
-                stats.lowStockProducts > 0
+                lowStockProducts.length > 0
 
                   ?
 
-                  `Attention required for ${stats.lowStockProducts} low stock products.`
+                  `Attention required for ${lowStockProducts.length} low stock products.`
 
                   :
 
@@ -322,7 +322,7 @@ export default function Dashboard({
 
                   <p className="text-4xl font-bold mt-3">
 
-                    {stats.lowStockProducts}
+                    {lowStockProducts.length}
 
                   </p>
 
