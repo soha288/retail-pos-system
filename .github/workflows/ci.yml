@@ -9,7 +9,7 @@ branches:
 jobs:
 build:
 
-```
+
 runs-on: ubuntu-latest
 
 steps:
@@ -31,5 +31,4 @@ steps:
     run: |
       cd client
       npm run build
-```
 
