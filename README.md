@@ -289,6 +289,7 @@ The application uses MongoDB Atlas cloud database for:
 
 # Developed By
 Soha
+
 Internship Project — Infotact Solutions
 
 Developed using MERN Stack and Enterprise Security Practices.
