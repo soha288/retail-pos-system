@@ -1,37 +1,35 @@
 name: Retail POS CI
 
 on:
-  push:
-    branches:
-      - main
-      - feature/inventory-engine
+push:
+branches:
+- main
+- feature/inventory-engine
 
 jobs:
-  build:
+build:
 
-    runs-on: ubuntu-latest
+```
+runs-on: ubuntu-latest
 
-    steps:
+steps:
 
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+  - name: Checkout Repository
+    uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
+  - name: Setup Node.js
+    uses: actions/setup-node@v4
+    with:
+      node-version: 18
 
-      - name: Install Frontend Dependencies
-        run: |
-          cd client
-          npm install
+  - name: Install Frontend Dependencies
+    run: |
+      cd client
+      npm install
 
-      - name: Build Frontend
-        run: |
-          cd client
-          npm run build
+  - name: Build Frontend
+    run: |
+      cd client
+      npm run build
+```
 
-      - name: Install Backend Dependencies
-        run: |
-          cd server
-          npm install
