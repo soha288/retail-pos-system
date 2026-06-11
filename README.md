@@ -266,13 +266,9 @@ The application uses MongoDB Atlas cloud database for:
 * MongoDB Integration
 * Analytics Charts
 * Protected APIs
-
-## In Progress
-
-* Deployment
 * GitHub Actions CI/CD
+* Deployment
 * UI Enhancements
-* Documentation Improvements
 
 ---
 
