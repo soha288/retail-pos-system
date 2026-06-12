@@ -66,7 +66,20 @@ The application helps retail stores manage:
 * Delete Users
 * Role Assignment
 * Admin-Only Access
+---
+#Credentials
 
+Email: admin@pos.com
+Password: admin123
+Role: system administrator(Admin)
+
+Email: inventory@pos.com
+Password: inventory123
+Role: Inventory Manager
+
+Email: cashier@pos.com
+Password: cashier123
+Role: Cashier
 ---
 #Live Deployment Links
 *Frontend Deployment
