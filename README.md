@@ -1,5 +1,5 @@
 # retail-pos-system
-Omnichannel POS and Inventory Management System   --MANTASHA MIRZA;NADEEM JAWED;AHTESHAM KHAN;SOHA BEGUM
+Omnichannel POS and Inventory Management System   --SOHA BEGUM
 # Retail POS & Inventory Management System
 
 ## Overview
